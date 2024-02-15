@@ -30,6 +30,28 @@ class Post(models.Model):
         blank=True, related_name='posts'
         )
     status = models.IntegerField(choices=STATUS, default=0)
+    excerpt = models.TextField(blank=True)
+    updated_on = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        ordering = ['-posted_at', 'author']
 
     def __str__(self):
-        return self.title
+        return f"{self.title} | written by {self.author}"
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(
+        Post, on_delete=models.CASCADE, related_name='comments'
+        )
+    author = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='user_comments'
+        )
+    content = models.TextField()
+    created_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        ordering = ['created_at']
+
+    def __str__(self):
+        return f'Comment by {self.author} on {self.post}'
