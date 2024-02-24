@@ -6,5 +6,4 @@ from .models import Post, Comment
 
 
 class BlogList(generic.ListView):
-    queryset = Post.objects.all()
-    template_name = 'blog/blog_list.html'
+    queryset = Post.objects.filter(status=1).order_by('-posted_at')
