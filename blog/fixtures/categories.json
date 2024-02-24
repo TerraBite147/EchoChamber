@@ -1,0 +1,43 @@
+[
+    {
+      "model": "blog.category",
+      "pk": 1,
+      "fields": {
+        "name": "Technology",
+        "description": "The latest advancements and discussions in technology."
+      }
+    },
+    {
+      "model": "blog.category",
+      "pk": 2,
+      "fields": {
+        "name": "Healthcare",
+        "description": "Innovations and trends in the healthcare industry."
+      }
+    },
+    {
+      "model": "blog.category",
+      "pk": 3,
+      "fields": {
+        "name": "Urban Mobility",
+        "description": "Exploring the future of urban transport and mobility solutions."
+      }
+    },
+    {
+      "model": "blog.category",
+      "pk": 4,
+      "fields": {
+        "name": "Food and Nutrition",
+        "description": "Culinary arts, nutrition facts, and delicious recipes."
+      }
+    },
+    {
+      "model": "blog.category",
+      "pk": 5,
+      "fields": {
+        "name": "Lifestyle",
+        "description": "Insights on lifestyle trends, hobbies, and leisure activities."
+      }
+    }
+  ]
+  

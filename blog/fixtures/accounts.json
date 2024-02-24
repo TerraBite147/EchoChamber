@@ -1,0 +1,47 @@
+[
+    {
+      "model": "auth.user",
+      "pk": 2,
+      "fields": {
+        "username": "NovaUser",
+        "password": "pbkdf2_sha256$260000$...",
+        "email": "novauser@example.com",
+        "is_staff": false,
+        "is_superuser": false
+      }
+    },
+    {
+      "model": "auth.user",
+      "pk": 3,
+      "fields": {
+        "username": "QuantumLeap",
+        "password": "pbkdf2_sha256$260000$...",
+        "email": "quantumleap@example.com",
+        "is_staff": false,
+        "is_superuser": false
+      }
+    },
+    {
+      "model": "auth.user",
+      "pk": 4,
+      "fields": {
+        "username": "GalacticVoyager",
+        "password": "pbkdf2_sha256$260000$...",
+        "email": "galacticvoyager@example.com",
+        "is_staff": false,
+        "is_superuser": false
+      }
+    },
+    {
+        "model": "auth.user",
+        "pk": 5,
+        "fields": {
+          "username": "WhiteCat22",
+          "password": "pbkdf2_sha256$260000$...",
+          "email": "whitecat22@example.com",
+          "is_staff": false,
+          "is_superuser": false
+        }
+      }
+  ]
+  
