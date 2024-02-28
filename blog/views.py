@@ -7,3 +7,5 @@ from .models import Post, Comment
 
 class BlogList(generic.ListView):
     queryset = Post.objects.filter(status=1).order_by('-posted_at')
+    template_name = 'blog/index.html'
+    paginate_by = 6
