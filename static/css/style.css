@@ -26,7 +26,7 @@ body {
 }
 
 .main-bg {
-    background-color: #F9FAFC;
+    background-color: #121212;
 }
 
 .card {
@@ -52,9 +52,10 @@ body {
 }
 
 .author {
-    color: white;
-    margin: 4px;
+    color: #000;
+    margin: 2px;
     text-transform: uppercase;
+    font-weight: 500;
 }
 
 .masthead {
@@ -93,12 +94,12 @@ body {
 
 .post-link {
     text-decoration: none;
-    color: #445261;
+    color: #c7d1dd;
 }
 
 .post-link:hover,
 .page-link {
-    color: #E84610;
+    color: #a1c4f0;
 }
 
 .post-title {
@@ -115,12 +116,6 @@ body {
 .btn-edit {
     background-color: #188181;
     color: #fff;
-}
-
-.btn-signup:hover,
-.btn-signup:active {
-    background-color: #fff;
-    color: #23BBBB;
 }
 
 .link {
@@ -158,4 +153,9 @@ body {
 
 .approval {
     color: rgb(222, 146, 168);
+}
+
+.title {
+    color: #ffc107;
+    text-decoration: none;
 }
