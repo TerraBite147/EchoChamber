@@ -20,7 +20,7 @@ class BlogList(generic.ListView):
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             # Render the posts only, not the full page
             html = render_to_string(
-                'blog/post_list.html', 
+                'blog/post_list.html',
                 context,
                 request=request,
             )
@@ -29,3 +29,4 @@ class BlogList(generic.ListView):
 
         # For non-AJAX requests, render the full page as usual
         return self.render_to_response(context)
+ 

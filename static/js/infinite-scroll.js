@@ -1,34 +1,37 @@
-$(document).ready(function() {
-  let pageNumber = 2;
-  let isLoading = false;
-  let $loader = $('#loader');
-  let $postContainer = $('.row').first(); // Assuming the first row is where posts are appended.
+$(function() {
+    var $loader = $('#loader'); // The loader element
+    var page = 2; // Start from the second page
+    var isLoading = false; // To prevent multiple loads
 
-  function nearBottomOfPage() {
-      return $(window).scrollTop() > $(document).height() - $(window).height() - 100;
-  }
+    // Detect when the user scrolls near the bottom of the content
+    $(window).scroll(function() {
+        var endOfPage = $(document).height() - $(window).height() - $loader.height();
+        
+        if ($(window).scrollTop() >= endOfPage && !isLoading) {
+            isLoading = true;
+            $loader.show();
 
-  $(window).scroll(function() {
-      if (nearBottomOfPage() && !isLoading) {
-          isLoading = true;
-          $loader.show();
-
-          $.ajax({
-              url: `?page=${pageNumber}`, // Update this URL to the endpoint where you fetch more posts.
-              type: 'GET',
-              success: function(data) {
-                  // Append the new posts to the post container.
-                  $postContainer.append(data);
-                  pageNumber++;
-                  isLoading = false;
-                  $loader.hide();
-              },
-              error: function() {
-                  isLoading = false;
-                  $loader.hide();
-                  // Handle errors (e.g., show a message to the user).
-              }
-          });
-      }
-  });
+            $.ajax({
+                url: '/blog/?page=' + page,
+                type: 'GET',
+                success: function(data) {
+                    // Append the new posts to the content
+                    if (data.html) {
+                        $('.row.justify-content-center').last().append(data.html);
+                        page++;
+                        isLoading = false;
+                        $loader.hide();
+                    } else {
+                        // No more posts to load
+                        $loader.hide();
+                    }
+                },
+                error: function() {
+                    isLoading = false;
+                    $loader.hide();
+                    console.log('No more pages to load.');
+                }
+            });
+        }
+    });
 });

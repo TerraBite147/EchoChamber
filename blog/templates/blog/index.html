@@ -1,0 +1,12 @@
+<!-- blog/index.html -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+{% include 'blog/post_list.html' %}
+<div id="loader" style="display: none;">
+    <p class="text-white">Loading more posts...</p>
+</div>
+{% endblock %}
+
