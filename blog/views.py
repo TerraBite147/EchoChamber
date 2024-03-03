@@ -11,7 +11,7 @@ from django.template.loader import render_to_string
 class BlogList(generic.ListView):
     queryset = Post.objects.filter(status=1).order_by('-posted_at')
     template_name = 'blog/index.html'
-    paginate_by = 4
+    paginate_by = 6
 
     def get(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
