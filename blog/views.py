@@ -29,4 +29,19 @@ class BlogList(generic.ListView):
 
         # For non-AJAX requests, render the full page as usual
         return self.render_to_response(context)
- 
+
+def post_detail(request, slug):
+    """
+    View for individual post
+
+    **context**
+    post : an instance of Post model
+
+    **template**
+    blog/post_detail.html
+
+    """
+    queryset = Post.objects.filter(status=1).order_by('-posted_at')
+    post = get_object_or_404(queryset, slug=slug)
+    comments = post.comments.filter(active=True)
+    return render(request, 'blog/post_detail.html', {'post': post, 'comments': comments})
