@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from .models import Post, Comment
 from django.http import JsonResponse
@@ -43,5 +43,5 @@ def post_detail(request, slug):
     """
     queryset = Post.objects.filter(status=1).order_by('-posted_at')
     post = get_object_or_404(queryset, slug=slug)
-    comments = post.comments.filter(active=True)
-    return render(request, 'blog/post_detail.html', {'post': post, 'comments': comments})
+    # comments = post.comments.filter(active=True)
+    return render(request, 'blog/post_detail.html', {'post': post})

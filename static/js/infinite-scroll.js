@@ -12,7 +12,7 @@ $(function() {
             $loader.show();
 
             $.ajax({
-                url: '/blog/?page=' + page,
+                url: '/?page=' + page,
                 type: 'GET',
                 success: function(data) {
                     // Append the new posts to the content

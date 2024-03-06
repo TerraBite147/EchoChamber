@@ -33,6 +33,9 @@ body {
     border: none;
     background-color: transparent;
 }
+.card-text {
+    color: #445261
+}
 
 .image-container {
     position: relative;
@@ -71,6 +74,7 @@ body {
     background-color: #445261;
     color: white;
     position: relative;
+    border-radius: 0 10px 10px;
 }
 
 .masthead-image {
@@ -103,7 +107,7 @@ body {
 }
 
 .post-title {
-    margin-top: 10%;
+    margin-top: 1%;
     margin-left: 5%;
 }
 
@@ -112,6 +116,13 @@ body {
     color: lightgray;
 }
 
+.comment-text{
+    color: #F9FAFC;
+}
+.comment-row {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
 .btn-signup,
 .btn-edit {
     background-color: #188181;
@@ -172,3 +183,4 @@ body {
     color: #526579;
     text-decoration: none;
 }
+
