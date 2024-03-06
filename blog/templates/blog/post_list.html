@@ -10,15 +10,15 @@
                 {% for post in post_list %}
                 <div class="col-md-8 d-flex align-items-center">
                     <div class="card mb-8 w-100">
-                        <div class="card-body">
+                        <div class="card">
                             <div class="image-container">
                                 <div class="btn btn-warning">
                                     <p class="author">{{ post.author }}</p>
                                 </div>
                             </div>
                             <a href="{% url 'post_detail' post.slug%}" class="post-link">
-                                <h2 class="card-title">{{ post.title }}</h2>
-                                <p class="card-text">{{ post.content }}</p>
+                                <h2 class="card">{{ post.title }}</h2>
+                                <p class="card">{{ post.excerpt }}</p>
                             </a>
 
                             <hr />
