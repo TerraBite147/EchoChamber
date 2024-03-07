@@ -16,32 +16,38 @@
                                     <p class="author">{{ post.author }}</p>
                                 </div>
                             </div>
-                            <a href="{% url 'post_detail' post.slug%}" class="post-link">
+                            <a href="{% url 'post_detail' post.slug %}" class="post-link">
                                 <h2 class="card">{{ post.title }}</h2>
                                 <p class="card">{{ post.excerpt }}</p>
                             </a>
-                            <p>{{ post.likes.count }} <i class="fa-solid fa-arrow-up"></i></p>
-                            <hr />
-                            <p class="card-text text-muted h6">{{ post.updated_on }} category: {{ post.category}} </p>
-                            </p>
+
+                            <!-- Like/Unlike Button -->
+                            <div>
+                                {% if user.is_authenticated %}
+                                <a href="javascript:void(0)" onclick="likePost('{{ post.slug }}')"><i
+                                        class="btn fa-solid fa-arrow-up yellow"></i></a>
+                                <span class="card-text" id="like-count-{{ post.slug }}">{{ post.likes.count }}</span>
+                                {% else %}
+                                <a href="{% url 'account_login' %}">
+                                    <i class="btn fa-solid fa-arrow-up yellow"></i>
+                                </a>
+                                <span class="card-text">{{ post.likes.count }}</span>
+                                {% endif %}
+                            </div>
+                            <hr>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
-            </div>
-            <div class="row justify-content-center">
-                {% endfor %}
-
-            </div>
-            <div id="loader" style="display: none;">
-                <p class="text-white">Loading more posts...</p>
+                <div id="loader" style="display: none;">
+                    <p class="text-white">Loading more posts...</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-{% block extra_js %}
-<script src="{% static 'js/infinite-scroll.js' %}"></script>
-<script src="https://kit.fontawesome.com/0da88937d5.js" crossorigin="anonymous"></script>
-{% endblock %}
-
-<!-- index.html content ends here -->
+    {% block extra_js %}
+    <script src="{% static 'js/infinite-scroll.js' %}"></script>
+    <script src="{% static 'js/post-like.js' %}"></script>
+    <script src="https://kit.fontawesome.com/0da88937d5.js" crossorigin="anonymous"></script>
+    {% endblock %}
