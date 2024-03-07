@@ -52,9 +52,9 @@
                 </form>
                 <div class="text-end">
                     {% if user.is_authenticated %}
+                    <span class="btn btn-outline-light me-2">{{ user.username }}</span>
                     <a class="btn btn-warning {% if request.path == logout_url %}active{% endif %}" aria-current="page"
                         href="{% url 'account_logout' %}">Logout</a>
-                    <span class="btn btn-outline-light me-2">{{ user.username }}</span>
                     {% else %}
                     <a class="btn btn-warning {% if request.path == signup_url %}active{% endif %}" aria-current="page"
                         href="{% url 'account_signup' %}">Sign-up</a>

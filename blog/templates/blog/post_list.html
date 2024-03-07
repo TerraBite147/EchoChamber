@@ -20,7 +20,7 @@
                                 <h2 class="card">{{ post.title }}</h2>
                                 <p class="card">{{ post.excerpt }}</p>
                             </a>
-
+                            <p>{{ post.likes.count }} <i class="fa-solid fa-arrow-up"></i></p>
                             <hr />
                             <p class="card-text text-muted h6">{{ post.updated_on }} category: {{ post.category}} </p>
                             </p>
@@ -41,6 +41,7 @@
 
 {% block extra_js %}
 <script src="{% static 'js/infinite-scroll.js' %}"></script>
+<script src="https://kit.fontawesome.com/0da88937d5.js" crossorigin="anonymous"></script>
 {% endblock %}
 
 <!-- index.html content ends here -->
