@@ -41,7 +41,7 @@ def post_detail(request, slug):
     post : an instance of Post model
 
     **template**
-    blog/post_detail.html
+    blog/_post_detail.html
 
     """
     queryset = Post.objects.filter(status=1).order_by("-posted_at")

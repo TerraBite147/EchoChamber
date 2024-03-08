@@ -2,6 +2,8 @@
 
 {% block content %}
 {% load static %}
+<script src="https://kit.fontawesome.com/0da88937d5.js" crossorigin="anonymous"></script>
+<script src="{% static 'js/post-like.js' %}"></script>
 
 <div class="container-fluid">
     <div class="row">
@@ -22,6 +24,7 @@
                             </a>
                             <p class="card-text text-muted h6">{{ post.updated_on }} category: {{ post.category}} </p>
                             </p>
+                            {% include 'blog/_post_likes.html' %}
                             <hr />
                             <h3 class="light-grey">Comments</h3>
                         </div>
@@ -36,4 +39,4 @@
     <!-- Comments Section -->
     {% include 'blog/_post_comments.html' %}
 </div>
-{% endblock content %}
+{% endblock content %}    
