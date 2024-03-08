@@ -1,0 +1,30 @@
+    <!-- Comments Section -->
+    {% if post.comments.all %}
+    <div class="masthead">
+        <div class="row">
+            {% for comment in post.comments.all %}
+            <div class="row justify-content-center">
+                <div class="col-md-8 mt-3 card top bg-light rounded-sm">
+                    <div class="comment-body card-body">
+                        <div class="btn btn-warning">
+                            <p class="author">{{ comment.author }}</p>
+                        </div>
+                        <p class="comment-text text-muted h6">{{ comment.created_at }}</p>
+                        <hr />
+                        </p>
+                        <p class="comment-text">{{ comment.content }}</p>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="row g-0">
+                <div class="col-md-8 mt-2 card top bg-light rounded-sm">
+                    <div class="card-body">
+                        <p class="comment-text">No comments yet.</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
