@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required
 from .models import Post, Comment, CommentLike, PostLike
+from .forms import CommentForm
 
 
 # Create your views here.
@@ -38,16 +39,34 @@ def post_detail(request, slug):
     View for individual post
 
     **context**
-    post : an instance of Post model
+    - post : an instance of Post model
+    - comment_form : a form for adding a new comment
 
     **template**
-    blog/_post_detail.html
+    - blog/post_detail.html
 
     """
-    queryset = Post.objects.filter(status=1).order_by("-posted_at")
+    queryset = Post.objects.filter(status=1)
     post = get_object_or_404(queryset, slug=slug)
-    # comments = post.comments.filter(active=True)
-    return render(request, "blog/post_detail.html", {"post": post})
+
+    if request.method == 'POST' and request.user.is_authenticated:
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.author = request.user
+            comment.post = post
+            comment.save()
+            return redirect('post_detail', slug=post.slug)
+    else:
+        comment_form = CommentForm()
+
+    context = {
+        "post": post,
+        "comment_form": comment_form,
+        # If you uncomment the next line, make sure the 'comments' field exists and is related to the 'Post' model
+        # "comments": post.comments.filter(active=True)
+    }
+    return render(request, "blog/post_detail.html", context)
 
 
 def like_post(request, slug):

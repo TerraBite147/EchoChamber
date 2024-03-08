@@ -14,7 +14,8 @@
 
       <p>{% blocktrans %}Welcome back to <span class="navbar-brand title">Echo Chamber</span>
       </p>
-      <p>Please log in. If you have not created an account yet, then <a class="link yellow" href="{{ signup_url }}">sign up</a>
+      <p>Please log in. If you have not created an account yet, then <a class="link yellow" href="{{ signup_url }}">sign
+          up</a>
         first.{% endblocktrans %}</p>
     </div>
   </div>
@@ -26,7 +27,7 @@
         {% if redirect_field_value %}
         <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
         {% endif %}
-        <button class="btn btn-signup right" type="submit">{% trans "Sign In" %}</button>
+        <button class="btn btn-warning" type="submit">{% trans "Sign In" %}</button>
       </form>
     </div>
   </div>

@@ -18,10 +18,8 @@
                                     <p class="author">{{ post.author }}</p>
                                 </div>
                             </div>
-                            <a href="{% url 'post_detail' post.slug%}" class="post-link">
                                 <h2 class="card">{{ post.title }}</h2>
                                 <p class="card">{{ post.content | safe }}</p>
-                            </a>
                             <p class="card-text text-muted h6">{{ post.updated_on }} category: {{ post.category}} </p>
                             </p>
                             {% include 'blog/_post_likes.html' %}
