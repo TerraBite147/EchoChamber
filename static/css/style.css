@@ -3,8 +3,6 @@ body {
     color: #c7d1dd;
 }
 
-
-
 .yellow {
     color: #ffc107;
 }
@@ -126,6 +124,10 @@ body {
     margin-left: 5%;
     color: lightgray;
 }
+.comment-textarea{
+    width: 100%;
+    height: 150px;
+}
 
 .comment-text{
     color: #404046;
@@ -195,3 +197,10 @@ body {
     text-decoration: none;
 }
 
+.login label{
+    width: 120px;
+}
+
+.signup label{
+    width: 130px;
+}

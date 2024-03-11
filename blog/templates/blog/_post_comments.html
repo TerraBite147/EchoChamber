@@ -1,16 +1,24 @@
-<!-- Comment form -->
-<div class="container-fluid">
-    <div class="row">
+<!-- Comment Form -->
+<div class="masthead">
+    <div class="row justify-content-center">
         {% if user.is_authenticated %}
-        <form method="POST" action=".">
-            {% csrf_token %}
-            {{ comment_form.as_p }}
-            <button type="submit">Submit Comment</button>
-        </form>
-        {% else %}
-        <p><a href="{% url 'account_login' %}">Log in</a> to post a comment.</p>
-        {% endif %}
+        <div class="col-md-8 d-flex align-items-center">
+            <div class="card mb-9 w-100">
+                <form method="POST" action=".">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ comment_form.content }}
+                    </div>
+                    <button type="submit" class="btn btn-warning">Submit Comment</button>
+            </div>
+            </form>
+        </div>
     </div>
+    {% else %}
+    <div class="col-md-8">
+        <p><a href="{% url 'account_login' %}" class="btn btn-warning">Log in</a> to post a comment.</p>
+    </div>
+    {% endif %}
 </div>
 
 <!-- Comments Section -->
