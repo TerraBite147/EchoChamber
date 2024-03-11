@@ -13,7 +13,7 @@
                         <div class="card">
                             <div class="image-container">
                                 <div class="btn btn-warning">
-                                    <p class="author">{{ post.author }}</p>
+                                    <a href="{% url 'post_detail' post.slug %}"  class="author">{{ post.author }}</a>
                                 </div>
                             </div>
                             <a href="{% url 'post_detail' post.slug %}" class="post-link">
@@ -22,12 +22,13 @@
                             </a>
 
                             <!-- Like/Unlike Button -->
-                            {% include 'blog/_post_likes.html' %}
+                                {% include 'blog/_post_interactions.html' %}
                             <hr>
                         </div>
                     </div>
                     {% endfor %}
                 </div>
+                <!-- Loading -->
                 <div id="loader" style="display: none;">
                     <p class="text-white">Loading more posts...</p>
                 </div>
