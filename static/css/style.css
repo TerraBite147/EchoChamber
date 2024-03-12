@@ -197,7 +197,9 @@ a {
 .interaction-icons {
     display: flex;
     align-items: center;
+    max-width: 80px;
     gap: 0;
+    background-color: #212529;
 }
 
 .like-icon, .like-count, .comment-icon, .comment-count {
