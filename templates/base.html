@@ -46,6 +46,9 @@
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     <li><a href="{% url 'home' %}" class="nav-link px-2">Home</a></li>
                     <li><a href="#" class="nav-link px-2">About</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'admin:index' %}" class="nav-link px-2">Admin</a></li>
+                    {% endif %}
                 </ul>
                 <div class="text-end">
                     {% if user.is_authenticated %}
