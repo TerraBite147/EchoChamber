@@ -54,22 +54,23 @@ class PostLike(models.Model):
 class Comment(models.Model):
     post = models.ForeignKey(
         Post, on_delete=models.CASCADE, related_name='comments'
-        )
+    )
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='user_comments'
-        )
+    )
     content = models.TextField()
     created_at = models.DateTimeField(default=timezone.now)
+    likes = models.ManyToManyField(User, related_name='liked_comments')
 
     class Meta:
-        ordering = ['created_at']
+        ordering = ['-created_at']
 
     def __str__(self):
         return f'Comment by {self.author} on {self.post}'
 
 
 class CommentLike(models.Model):
-    comment = models.ForeignKey(Comment, related_name='likes', on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name='comment_likes', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -77,4 +78,4 @@ class CommentLike(models.Model):
         unique_together = ('comment', 'user')
 
     def __str__(self):
-        return f'{self.user} likes {self.comment}'
+        return f'{self.user.username} likes "{self.comment.content}"'

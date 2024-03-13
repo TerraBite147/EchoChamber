@@ -197,7 +197,7 @@ a {
 .interaction-icons {
     display: flex;
     align-items: center;
-    max-width: 80px;
+    padding-left: 5px;
     gap: 0;
     background-color: #212529;
 }

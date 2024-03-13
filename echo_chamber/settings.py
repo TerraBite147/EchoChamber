@@ -32,7 +32,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "8000-terrabite147-django-blog-87yomahdvf.us2.codeanyapp.com",
-    "8000-terrabite14-echochamber-6h3pv9eflh2.ws-eu108.gitpod.io",
+    ".gitpod.io",
     ".herokuapp.com",
     "127.0.0.1",
 ]

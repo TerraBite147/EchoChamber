@@ -1,0 +1,18 @@
+{% load static %}
+
+<script src="{% static 'js/comment-like.js' %}"></script>
+
+<div class="interaction-icons rounded">
+    {% if user.is_authenticated %}
+    <a href="javascript:void(0)" onclick="likeComment('{{ comment.id }}')" class="btn link like-icon">
+        <i id="comment-like-icon-{{ comment.id }}"
+            class="fa-solid fa-arrow-up yellow {% if request.user in comment.likes.all %}liked{% endif %}"></i>
+    </a>
+    <span id="comment-like-count-{{ comment.id }}" class="like-count">{{ comment.likes.count }}</span>
+    {% else %}
+    <a href="{% url 'account_login' %}" class="btn link like-icon">
+        <i class="fa-solid fa-arrow-up yellow"></i>
+    </a>
+    <span class="like-count">{{ comment.likes.count }}</span>
+    {% endif %}
+</div>

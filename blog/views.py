@@ -63,8 +63,6 @@ def post_detail(request, slug):
     context = {
         "post": post,
         "comment_form": comment_form,
-        # If you uncomment the next line, make sure the 'comments' field exists and is related to the 'Post' model
-        # "comments": post.comments.filter(active=True)
     }
     return render(request, "blog/post_detail.html", context)
 
@@ -89,3 +87,39 @@ def unlike_post(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     PostLike.objects.filter(post=post, user=request.user).delete()
     return redirect("post_detail", post_id=post.id)
+
+
+
+@login_required
+def like_comment(request, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id)
+    # Check if the user has already liked this comment
+    like, created = CommentLike.objects.get_or_create(user=request.user, comment=comment)
+
+    if not created:
+        # If the like already exists, delete it (unlike action)
+        like.delete()
+        liked = False
+    else:
+        # If the like is new, just mark it as liked
+        liked = True
+
+    # Re-query to get the updated likes count after the like/unlike action
+    updated_likes_count = CommentLike.objects.filter(comment=comment).count()
+
+    return JsonResponse({
+        'liked': liked,
+        'likes_count': updated_likes_count,
+    })
+    
+@login_required
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    # Ensure the request user is the author of the comment
+    if request.user == comment.author:
+        comment.delete()
+        # Redirect back to the post detail page
+        return redirect('post_detail', slug=comment.post.slug)
+    else:
+        # Handle unauthorized attempts
+        return HttpResponseForbidden("You are not allowed to delete this comment.")
