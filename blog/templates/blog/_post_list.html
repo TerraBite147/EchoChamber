@@ -6,34 +6,36 @@
 
         <!-- Blog Entries Column -->
         <div class="col-12 mt-3">
+            {% for post in post_list %}
+            <!-- Each post is in its own row -->
             <div class="row justify-content-center">
-                {% for post in post_list %}
                 <div class="col-md-8 d-flex align-items-center">
                     <div class="card mb-8 w-100">
                         <div class="card">
-                            <div class="image-container">
+                            <div class="mt-auto d-flex justify-content-between">
                                 <div class="btn btn-warning">
-                                    <a href="{% url 'post_detail' post.slug %}"  class="author">{{ post.author }}</a>
+                                    <a href="{% url 'post_detail' post.slug %}" class="author">{{ post.author }}</a>
                                 </div>
+                                <div class="btn btn-warning author"> {{ post.category }}</div>
                             </div>
                             <a href="{% url 'post_detail' post.slug %}" class="post-link">
                                 <h2 class="card">{{ post.title }}</h2>
                                 <p class="card">{{ post.excerpt }}</p>
                             </a>
-
                             <!-- Like/Unlike Button -->
-                                {% include 'blog/_post_interactions.html' %}
+                            {% include 'blog/_post_interactions.html' %}
                             <hr>
                         </div>
                     </div>
-                    {% endfor %}
-                </div>
-                <!-- Loading -->
-                <div id="loader" style="display: none;">
-                    <p class="text-white">Loading more posts...</p>
                 </div>
             </div>
+            {% endfor %}
+            <!-- Loading -->
+            <div id="loader" style="display: none;">
+                <p class="text-white">Loading more posts...</p>
+            </div>
         </div>
+
     </div>
 
     {% block extra_js %}
