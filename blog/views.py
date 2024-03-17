@@ -4,8 +4,9 @@ from django.urls import reverse
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required
+from django.utils.text import slugify
 from .models import Post, Comment, CommentLike, PostLike
-from .forms import CommentForm
+from .forms import CommentForm, PostForm
 
 
 # Create your views here.
@@ -123,3 +124,18 @@ def delete_comment(request, comment_id):
     else:
         # Handle unauthorized attempts
         return HttpResponseForbidden("You are not allowed to delete this comment.")
+    
+@login_required
+def create_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user  # Set the author to the current user
+            post.slug = slugify(post.title)  # Generate a slug from the title
+            post.save()
+            return redirect('post_detail', slug=post.slug)  # Redirect to the post's detail view
+    else:
+        form = PostForm()
+
+    return render(request, 'blog/_post_creation.html', {'form': form})
