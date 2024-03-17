@@ -21,16 +21,15 @@ class Post(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='posts'
-        )
-    link = models.URLField(blank=True, null=True)  # potential link for sharing
-    content = models.TextField(blank=True)
+    )
+    content = models.TextField()
     posted_at = models.DateTimeField(default=timezone.now)
     category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, null=True,
-        blank=True, related_name='posts'
-        )
+        related_name='posts'
+    )
     status = models.IntegerField(choices=STATUS, default=0)
-    excerpt = models.TextField(blank=True)
+    excerpt = models.TextField()
     updated_on = models.DateTimeField(default=timezone.now)
 
     class Meta:
