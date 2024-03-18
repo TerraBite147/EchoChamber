@@ -2,25 +2,23 @@
 
 <!-- index.html content starts here -->
 <div class="container-fluid">
-    <div class="row">
-
+    <section class="row">
         <!-- Blog Entries Column -->
-        <div class="col-12 mt-3">
+        <div class="col-12 mt-3" id="posts-container">
             {% for post in post_list %}
-            <!-- Each post is in its own row -->
-            <div class="row justify-content-center">
+            <article class="row justify-content-center">
                 <div class="col-md-8 d-flex align-items-center">
                     <div class="card mb-8 w-100">
-                        <div class="card">
-                            <div class="mt-auto d-flex justify-content-between">
+                        <div class="card-body">
+                            <header class="mt-auto d-flex justify-content-between">
                                 <div class="btn btn-warning">
                                     <a href="{% url 'post_detail' post.slug %}" class="author">{{ post.author }}</a>
                                 </div>
                                 <div class="btn btn-warning author"> {{ post.category }}</div>
-                            </div>
+                            </header>
                             <a href="{% url 'post_detail' post.slug %}" class="post-link">
-                                <h2 class="card">{{ post.title }}</h2>
-                                <p class="card">{{ post.excerpt }}</p>
+                                <h2>{{ post.title }}</h2>
+                                <p>{{ post.excerpt }}</p>
                             </a>
                             <!-- Like/Unlike Button -->
                             {% include 'blog/_post_interactions.html' %}
@@ -28,14 +26,17 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </article>
             {% endfor %}
-            <!-- Loading -->
-            <div id="loader" style="display: none;">
-                <p class="text-white">Loading more posts...</p>
-            </div>
         </div>
+    </section>
 
+    <!-- Hidden input for tracking current page number -->
+    <input type="hidden" id="page-number" value="1" />
+
+    <!-- Loader Indicator -->
+    <div id="loader" style="display: none;">
+        <p class="text-center text-white">Loading more posts...</p>
     </div>
 
     {% block extra_js %}
@@ -43,3 +44,4 @@
     <script src="{% static 'js/post-like.js' %}"></script>
     <script src="https://kit.fontawesome.com/0da88937d5.js" crossorigin="anonymous"></script>
     {% endblock %}
+</div>

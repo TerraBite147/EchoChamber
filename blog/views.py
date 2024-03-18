@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.text import slugify
 from .models import Post, Comment, CommentLike, PostLike
 from .forms import CommentForm, PostForm
+from django.core.paginator import Paginator
 
 # Utility function to toggle likes for posts and comments
 def toggle_like(object, user):
@@ -26,6 +27,7 @@ def toggle_like(object, user):
 
 
 class BlogList(generic.ListView):
+    model = Post
     queryset = Post.objects.filter(status=1).order_by("-posted_at")
     template_name = "blog/index.html"
     paginate_by = 6
@@ -35,8 +37,25 @@ class BlogList(generic.ListView):
         context = self.get_context_data()
 
         if request.headers.get("x-requested-with") == "XMLHttpRequest":
-            html = render_to_string("blog/post_list.html", context, request=request)
-            return JsonResponse({"html": html})
+            # Define the page number
+            page = request.GET.get('page')
+            paginator = Paginator(self.queryset, self.paginate_by)
+
+            try:
+                posts = paginator.page(page)
+            except PageNotAnInteger:
+                # If page is not an integer, deliver first page.
+                posts = paginator.page(1)
+            except EmptyPage:
+                # If page is out of range, deliver last page of results.
+                posts = paginator.page(paginator.num_pages)
+
+            html = render_to_string(
+                "blog/_post_list_partial.html",  # This template contains the post list part
+                {'post_list': posts},
+                request=request
+            )
+            return JsonResponse({'html': html, 'has_next': posts.has_next()})
 
         return self.render_to_response(context)
 
