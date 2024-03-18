@@ -89,7 +89,15 @@ def unlike_post(request, post_id):
     PostLike.objects.filter(post=post, user=request.user).delete()
     return redirect("post_detail", post_id=post.id)
 
-
+@login_required
+def delete_post(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    if request.user == post.author:
+        post.delete()
+        return redirect('home')
+    else:
+        # Handle unauthorized attempts
+        return HttpResponseForbidden("You are not allowed to delete this post.")
 
 @login_required
 def like_comment(request, comment_id):
