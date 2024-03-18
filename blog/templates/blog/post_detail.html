@@ -19,11 +19,16 @@
                                     <p class="author">{{ post.author }}</p>
                                 </div>
                             </div>
-                                <h2 class="card">{{ post.title }}</h2>
-                                <p class="card">{{ post.content | safe }}</p>
+                            <h2 class="card">{{ post.title }}</h2>
+                            <p class="card">{{ post.content | safe }}</p>
                             <p class="card-text text-muted h6">{{ post.updated_on }} category: {{ post.category}} </p>
                             </p>
-                            {% include 'blog/_post_interactions.html' %}
+                            <div class="mt-auto d-flex justify-content-between">
+                                {% include 'blog/_post_interactions.html' %}
+                                {% if user.is_authenticated and user == post.author %}
+                                <a href="{% url 'delete_post' post.slug %}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this post?');">Delete</a>
+                                {% endif %}
+                            </div>
                             <hr />
                             <h3 class="light-grey">Comments</h3>
                         </div>
@@ -38,4 +43,4 @@
     <!-- Comments Section -->
     {% include 'blog/_post_comments.html' %}
 </div>
-{% endblock content %}    
+{% endblock content %}
