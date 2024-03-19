@@ -94,10 +94,11 @@ def like_post(request, slug):
 @login_required
 def delete_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    if request.user == post.author:
+    if request.user == post.author or request.user.is_superuser:
         post.delete()
         return redirect("home")
-    return HttpResponseForbidden("You are not allowed to delete this post.")
+    else:
+        return HttpResponseForbidden("You are not allowed to delete this post.")
 
 
 @login_required
@@ -111,10 +112,11 @@ def like_comment(request, comment_id):
 @login_required
 def delete_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
-    if request.user == comment.author:
+    if request.user == comment.author or request.user.is_superuser:
         comment.delete()
         return redirect("post_detail", slug=comment.post.slug)
-    return HttpResponseForbidden("You are not allowed to delete this comment.")
+    else:
+        return HttpResponseForbidden("You are not allowed to delete this comment.")
 
 
 @login_required
@@ -140,8 +142,15 @@ def profile(request):
         .order_by("-posted_at")
     )
 
+    user_comments = (
+        Comment.objects.filter(author=request.user)
+        .annotate(likes_count=Count("likes"))
+        .order_by("-created_at")
+    )
+
     context = {
         "user_posts": user_posts,
+        "user_comments": user_comments,
     }
 
-    return render(request, "blog/profile.html", context)
+    return render(request, "blog/_profile.html", context)

@@ -1,23 +1,47 @@
-{% extends 'blog/base.html' %}
+{% extends "base.html" %}
 
 {% load static %}
 
 {% block content %}
-<h1>{{ request.user.username }}'s Profile</h1>
+<h1 class="text-center yellow">{{ request.user.username }}'s Profile</h1>
+<hr>
 
-<div class="user-posts">
-    <h2>Your Posts</h2>
-    <ul>
-        {% for post in user_posts %}
-        <li>
-            <a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a> 
-            - {{ post.comment_count }} Comments 
-            - {{ post.like_count }} Likes
-        </li>
-        {% empty %}
-        <li>You have not written any posts yet.</li>
-        {% endfor %}
-    </ul>
+<div class="container bg-dark rounded">
+    <div class="row">
+        <!-- User Posts Column -->
+        <div class="col-md-6 user-posts">
+            <h2 class="text-white">Your Posts</h2>
+            <ul class="text-white">
+                {% for post in user_posts %}
+                <li>
+                    <a href="{% url 'post_detail' slug=post.slug %}" class="yellow">{{ post.title }}</a>
+                    - {{ post.like_count }} Likes
+                    - {{ post.comment_count }} Comments
+                </li>
+                {% empty %}
+                <li>You have not written any posts yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- User Comments Column -->
+        <div class="col-md-6 user-comments">
+            <h2 class="text-white">Your Comments</h2>
+            {% for comment in user_comments %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{% url 'post_detail' slug=comment.post.slug %}" class="yellow">{{ comment.post.title }}</a>
+                    </h5>
+                    <p>{{ comment.content|truncatewords:10 }}</p>
+                    <p class="text-white"><small>Likes: {{ comment.likes_count }}</small></p>
+                </div>
+            </div>
+            {% empty %}
+            <p>You have not commented on any posts yet.</p>
+            {% endfor %}
+        </div>
+    </div>
 </div>
 
 {% endblock %}
