@@ -8,6 +8,9 @@ from django.utils.text import slugify
 from .models import Post, Comment, CommentLike, PostLike
 from .forms import CommentForm, PostForm
 from django.core.paginator import Paginator
+from django.shortcuts import render
+from django.db.models import Count
+
 
 # Utility function to toggle likes for posts and comments
 def toggle_like(object, user):
@@ -18,7 +21,9 @@ def toggle_like(object, user):
     else:
         return None
 
-    like, created = model.objects.get_or_create(user=user, **{object.__class__.__name__.lower(): object})
+    like, created = model.objects.get_or_create(
+        user=user, **{object.__class__.__name__.lower(): object}
+    )
     if created:
         return True  # Liked
     else:
@@ -38,7 +43,7 @@ class BlogList(generic.ListView):
 
         if request.headers.get("x-requested-with") == "XMLHttpRequest":
             # Define the page number
-            page = request.GET.get('page')
+            page = request.GET.get("page")
             paginator = Paginator(self.queryset, self.paginate_by)
 
             try:
@@ -52,25 +57,26 @@ class BlogList(generic.ListView):
 
             html = render_to_string(
                 "blog/_post_list_partial.html",  # This template contains the post list part
-                {'post_list': posts},
-                request=request
+                {"post_list": posts},
+                request=request,
             )
-            return JsonResponse({'html': html, 'has_next': posts.has_next()})
+            return JsonResponse({"html": html, "has_next": posts.has_next()})
 
         return self.render_to_response(context)
+
 
 def post_detail(request, slug):
     queryset = Post.objects.filter(status=1)
     post = get_object_or_404(queryset, slug=slug)
 
-    if request.method == 'POST' and request.user.is_authenticated:
+    if request.method == "POST" and request.user.is_authenticated:
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
             comment.author = request.user
             comment.post = post
             comment.save()
-            return redirect('post_detail', slug=post.slug)
+            return redirect("post_detail", slug=post.slug)
     else:
         comment_form = CommentForm()
 
@@ -82,7 +88,7 @@ def post_detail(request, slug):
 def like_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
     is_liked = toggle_like(post, request.user)
-    return JsonResponse({'likes_count': post.likes.count(), 'is_liked': is_liked})
+    return JsonResponse({"likes_count": post.likes.count(), "is_liked": is_liked})
 
 
 @login_required
@@ -90,7 +96,7 @@ def delete_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
     if request.user == post.author:
         post.delete()
-        return redirect('home')
+        return redirect("home")
     return HttpResponseForbidden("You are not allowed to delete this post.")
 
 
@@ -99,7 +105,7 @@ def like_comment(request, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
     liked = toggle_like(comment, request.user)
     updated_likes_count = CommentLike.objects.filter(comment=comment).count()
-    return JsonResponse({'liked': liked, 'likes_count': updated_likes_count})
+    return JsonResponse({"liked": liked, "likes_count": updated_likes_count})
 
 
 @login_required
@@ -107,20 +113,35 @@ def delete_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
     if request.user == comment.author:
         comment.delete()
-        return redirect('post_detail', slug=comment.post.slug)
+        return redirect("post_detail", slug=comment.post.slug)
     return HttpResponseForbidden("You are not allowed to delete this comment.")
 
 
 @login_required
 def create_post(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = PostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
             post.slug = slugify(post.title)
             post.save()
-            return redirect('post_detail', slug=post.slug)
+            return redirect("post_detail", slug=post.slug)
     else:
         form = PostForm()
-    return render(request, 'blog/_post_creation.html', {'form': form})
+    return render(request, "blog/_post_creation.html", {"form": form})
+
+
+@login_required
+def profile(request):
+    user_posts = (
+        Post.objects.filter(author=request.user)
+        .annotate(comment_count=Count("comments"), like_count=Count("likes"))
+        .order_by("-posted_at")
+    )
+
+    context = {
+        "user_posts": user_posts,
+    }
+
+    return render(request, "blog/profile.html", context)

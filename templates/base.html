@@ -10,40 +10,41 @@
 
 <head>
     <title>Echo Chamber</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Join the Echo Chamber to share and discuss your thoughts and opinions." />
+    <meta name="keywords" content="blog, discussion, echo chamber, opinions" />
+    <meta name="robots" content="index,follow" />
+    <!-- Preload Fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;700&display=swap" as="style">
 
     <!-- Google Fonts CSS -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;700&display=swap" rel="stylesheet">
 
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <script src="https://kit.fontawesome.com/0da88937d5.js" crossorigin="anonymous"></script>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="shortcut icon" type="image/ico" href="{% static 'favicon.ico' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}">
+    <link rel="icon" sizes="192x192" href="{% static 'icons/icon-192.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'icons/apple-touch-icon.png' %}">
 
+    {% block extra_styles %}{% endblock %}
 </head>
 
 <body class="d-flex flex-column h-100 main-bg">
-
     <!-- Navigation -->
     <header class="p-3 bg-dark text-white">
         <div class="container">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <nav class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
+                aria-label="Main navigation">
                 <a class="navbar-brand title" href="{% url 'home' %}">Echo Chamber</a>
 
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
@@ -57,41 +58,52 @@
                     {% if user.is_authenticated %}
                     <a class="btn btn-warning" href="{% url 'create_post' %}">+ Create</a>
                     <span class="btn btn-outline-light">{{ user.username }}</span>
-                    <a class="btn btn-warning {% if request.path == logout_url %}active{% endif %}" aria-current="page"
-                        href="{% url 'account_logout' %}">Logout</a>
+                    <a class="btn btn-warning" aria-current="page" href="{% url 'account_logout' %}">Logout</a>
                     {% else %}
-                    <a class="btn btn-outline-light {% if request.path == signup_url %}active{% endif %}"
-                        aria-current="page" href="{% url 'account_signup' %}">Sign-up</a>
-                    <a class="btn btn-warning {% if request.path == login_url %}active{% endif %}" aria-current="page"
-                        href="{% url 'account_login' %}">Login</a>
+                    <a class="btn btn-outline-light" aria-current="page" href="{% url 'account_signup' %}">Sign-up</a>
+                    <a class="btn btn-warning" aria-current="page" href="{% url 'account_login' %}">Login</a>
                     {% endif %}
                 </div>
-            </div>
+            </nav>
         </div>
     </header>
 
     <main class="flex-shrink-0 main-bg">
-
         {% block content %}
         <!-- Content Goes here -->
         {% endblock content %}
-
     </main>
 
     <!-- Footer -->
     <footer class="footer mt-auto p-3 bg-dark text-white">
-        <p class="m-0 text-center">
-            {% block copyright %}
-            Made by Logan Carlow 2024
-            {% endblock copyright %}
-        </p>
-        <p class="m-0 text-center text-secondary">Follow us: <i class="fab fa-facebook-square ms-3"></i>
-            <i class="fab fa-twitter-square ms-3"></i>
-            <i class="fab fa-instagram-square ms-3"></i>
-            <i class="fab fa-youtube-square ms-3"></i>
-        </p>
+        <div class="container">
+            <p class="m-0 text-center">
+                {% block copyright %}
+                © Echo Chamber 2024
+                {% endblock %}
+            </p>
+            <p class="m-0 text-center text-secondary">
+                Follow us:
+                <a href="#" class="text-secondary ms-3"><i class="fab fa-facebook-square"></i></a>
+                <a href="#" class="text-secondary ms-3"><i class="fab fa-twitter-square"></i></a>
+                <a href="#" class="text-secondary ms-3"><i class="fab fa-instagram-square"></i></a>
+                <a href="#" class="text-secondary ms-3"><i class="fab fa-youtube-square"></i></a>
+            </p>
+        </div>
     </footer>
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js" defer
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <!-- Font Awesome Kit -->
+    <script src="https://kit.fontawesome.com/0da88937d5.js" defer crossorigin="anonymous"></script>
+
+    {% block extra_scripts %}{% endblock %}
 </body>
 
 </html>

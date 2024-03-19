@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<h1>{{ request.user.username }}'s Profile</h1>
+
+<div class="user-posts">
+    <h2>Your Posts</h2>
+    <ul>
+        {% for post in user_posts %}
+        <li>
+            <a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a> 
+            - {{ post.comment_count }} Comments 
+            - {{ post.like_count }} Likes
+        </li>
+        {% empty %}
+        <li>You have not written any posts yet.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}
