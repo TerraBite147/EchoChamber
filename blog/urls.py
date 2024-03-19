@@ -15,4 +15,9 @@ urlpatterns = [
     ),
     path("profile/", profile, name="profile"),
     path("clear-notifications/", views.clear_notifications, name="clear_notifications"),
+    path(
+        "notifications/read/<int:notification_id>/",
+        views.read_notification,
+        name="read_notification",
+    ),
 ]

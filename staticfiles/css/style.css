@@ -209,3 +209,46 @@ a {
     padding: 0;
 }
 
+a[data-bs-toggle="collapse"] {
+    cursor: pointer;
+}
+
+a[data-bs-toggle="collapse"]:hover i {
+    color: #ccc; /* Change as per your color scheme */
+    transform: scale(1.1); /* Slightly increase the size */
+}
+
+a[data-bs-toggle="collapse"].collapsed i {
+    transform: rotate(0);
+    transition: transform 0.3s ease;
+}
+
+a[data-bs-toggle="collapse"] i {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+}
+
+.toggle-collapse {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.toggle-collapse:hover i {
+    color: #ccc; /* Adjust based on your color scheme */
+}
+
+.collapse.show .toggle-collapse i {
+    transform: rotate(180deg);
+}
+
+.user-posts h2, .user-comments h2 {
+    position: relative;
+    padding-right: 25px; /* Provides space for the toggle icon */
+}
+
+.user-posts i, .user-comments i {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
