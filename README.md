@@ -1,39 +1,46 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Echo Chamber
+Echo Chamber is a community posting site where like-minded users can share posts, ideas, and engage with other users through comments and likes.
 
-Welcome,
 
-This is the Code Institute student template for Codeanywhere. If you are using Gitpod then you need [this template](https://github.com/Code-Institute-Org/gitpod-full-template) instead.  We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+[[mockup]]
 
-You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Codeanywhere and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **August 30th, 2023**
+[[developer]]
 
-## Codeanywhere Reminders
+[[Project repo]]
 
-To run a frontend (HTML, CSS, Javascript only) application in Codeanywhere, in the terminal, type:
+# Table of Conent
 
-`python3 -m http.server`
 
-A button should appear to click: _Open Preview_ or _Open Browser_.
 
-To run a frontend (HTML, CSS, Javascript only) application in Codeanywhere with no-cache, you can use this alias for `python3 -m http.server`.
+# Project Goals
 
-`http_server`
+### User Goals:
+- Share Ideas: Users want to share their thoughts, opinions, and ideas with like-minded individuals.
+- Discover Content: Users aim to discover new and interesting content posted by others within the community.
+- Engage with Community: Users seek opportunities to engage with other members through comments, likes, and discussions.
+- Build Relationships: Users may want to connect with others who share similar interests or viewpoints.
+- Stay Informed: Users want to stay informed about trending topics, discussions, and community events.
+### Site Owner Goals:
+- User Engagement: The site owner aims to foster a vibrant and active community where users engage with each other's content regularly.
+- User Retention: The site owner wants to encourage users to return to the platform frequently by providing valuable content and a positive user experience.
+- Community Growth: The site owner seeks to attract new users and grow the community over time by promoting the platform and expanding its reach.
+- Feedback Collection: The site owner aims to collect feedback from users to understand their needs, preferences, and suggestions for improving the platform.
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+# User Experience
 
-A button should appear to click: _Open Preview_ or _Open Browser_.
+### Target Audience:
+- Community Enthusiasts: Individuals who are passionate about participating in online communities, sharing ideas, and engaging in discussions.
+- Knowledge Seekers: Users who are curious and eager to explore diverse perspectives, learn new things, and expand their knowledge.
+- Opinion Leaders: People who enjoy expressing their opinions, insights, and viewpoints on various topics and influencing others in the community.
+- Social Networkers: Individuals who value social connections and enjoy interacting with like-minded individuals who share their interests and values.
+- Content Creators: Users who produce original content, such as articles, blog posts, and seek a platform to showcase their creations to a receptive audience.
+### User Requirements Expectations:
+- Intuitive User Interface: Users expect a clean, user-friendly interface that is easy to navigate, allowing them to browse content, interact with others, and access features effortlessly.
+- Content Discovery: Users require robust content discovery features, categories, tags, to help them find relevant and interesting content quickly.
+- Engagement Tools: Users expect features for engagement, such as commenting and liking, to facilitate interaction and community building.
+- Responsive Design: Users access the platform from various devices, so they expect a responsive design that adapts seamlessly to different screen sizes and resolutions for a consistent experience.
+- Community Guidelines: Users value clear community guidelines and moderation policies to ensure a safe, respectful, and inclusive environment conducive to open dialogue and constructive discourse.
+- Feedback Mechanism: Users appreciate the ability to provide feedback, report issues, and suggest improvements to help shape the platform and enhance their experience over time.
 
-In Codeanywhere you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+By understanding the target audience and their requirements and expectations, the Echo Chamber platform can be designed and developed to meet their needs effectively, fostering a positive and engaging user experience.
 
-To log into the Heroku toolbelt CLI:
-
-1. Log in to your Heroku account and go to _Account Settings_ in the menu under your avatar.
-2. Scroll down to the _API Key_ and click _Reveal_
-3. Copy the key
-4. In Codeanywhere, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
-
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
-
----
-
-Happy coding!
