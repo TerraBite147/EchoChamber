@@ -186,3 +186,6 @@ def read_notification(request, notification_id):
 def clear_notifications(request):
     Notification.objects.filter(user=request.user).update(is_read=True)
     return redirect("profile")
+
+def about(request):
+    return render(request, 'blog/about.html')

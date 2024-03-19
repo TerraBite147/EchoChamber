@@ -20,4 +20,5 @@ urlpatterns = [
         views.read_notification,
         name="read_notification",
     ),
+    path('about/', views.about, name='about'),
 ]

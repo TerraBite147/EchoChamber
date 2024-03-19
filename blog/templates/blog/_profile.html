@@ -6,7 +6,7 @@
 <h1 class="text-center yellow">{{ request.user.username }}'s Profile</h1>
 <hr>
 
-<div class="container bg-dark rounded">
+<div class="container bg-dark rounded pb-2">
     <div class="row">
         <!-- User Posts Column -->
         <div class="col-md-6 user-posts">
@@ -70,8 +70,8 @@
             {% endfor %}
         </ul>
         {% if user_notifications %}
-        <button onclick="location.href='{% url 'clear_notifications' %}'" class="btn btn-primary">Clear
-            Notifications</button>
+        <button onclick="location.href='{% url 'clear_notifications' %}'" class="btn btn-primary">Clear Notifications</button>
+
         {% endif %}
     </div>
 </div>
