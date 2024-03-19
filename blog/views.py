@@ -5,7 +5,7 @@ from django.http import JsonResponse, HttpResponseForbidden
 from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required
 from django.utils.text import slugify
-from .models import Post, Comment, CommentLike, PostLike
+from .models import Post, Comment, CommentLike, PostLike, Notification
 from .forms import CommentForm, PostForm
 from django.core.paginator import Paginator
 from django.shortcuts import render
@@ -88,7 +88,16 @@ def post_detail(request, slug):
 def like_post(request, slug):
     post = get_object_or_404(Post, slug=slug)
     is_liked = toggle_like(post, request.user)
-    return JsonResponse({"likes_count": post.likes.count(), "is_liked": is_liked})
+
+    # Create a notification if the post is liked (not unliked)
+    if is_liked:
+        Notification.objects.create(
+        user=post.author, 
+        message=f"Your post '{post.title}' received a new like!",
+        target_url=reverse('post_detail', kwargs={'slug': post.slug})
+    )
+
+    return JsonResponse({'likes_count': post.likes.count(), 'is_liked': is_liked})
 
 
 @login_required
@@ -136,21 +145,29 @@ def create_post(request):
 
 @login_required
 def profile(request):
-    user_posts = (
-        Post.objects.filter(author=request.user)
-        .annotate(comment_count=Count("comments"), like_count=Count("likes"))
-        .order_by("-posted_at")
-    )
+    user_posts = Post.objects.filter(author=request.user).annotate(
+        comment_count=Count('comments'), like_count=Count('likes')
+    ).order_by('-posted_at')
 
-    user_comments = (
-        Comment.objects.filter(author=request.user)
-        .annotate(likes_count=Count("likes"))
-        .order_by("-created_at")
-    )
+    user_comments = Comment.objects.filter(author=request.user).annotate(
+        likes_count=Count('likes')
+    ).order_by('-created_at')
+
+    user_notifications = Notification.objects.filter(user=request.user, is_read=False).order_by('-created_at')
+    has_unread_notifications = user_notifications.exists()
 
     context = {
-        "user_posts": user_posts,
-        "user_comments": user_comments,
+        'user_posts': user_posts,
+        'user_comments': user_comments,
+        'user_notifications': user_notifications,
+        'has_unread_notifications': has_unread_notifications,  # Add this line
     }
 
-    return render(request, "blog/_profile.html", context)
+    return render(request, 'blog/_profile.html', context)
+
+
+
+@login_required
+def clear_notifications(request):
+    Notification.objects.filter(user=request.user).update(is_read=True)
+    return redirect('profile')

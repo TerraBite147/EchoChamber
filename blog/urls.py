@@ -14,4 +14,5 @@ urlpatterns = [
         "delete_comment/<int:comment_id>/", views.delete_comment, name="delete_comment"
     ),
     path("profile/", profile, name="profile"),
+    path("clear-notifications/", views.clear_notifications, name="clear_notifications"),
 ]

@@ -6,8 +6,6 @@ STATUS = ((0, "Draft"), (1, "Published"))
 
 # Create your models here.
 
-
-# Unsure if category is going to be utilized
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField(blank=True)
@@ -78,3 +76,17 @@ class CommentLike(models.Model):
 
     def __str__(self):
         return f'{self.user.username} likes "{self.comment.content}"'
+    
+    
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
+    message = models.CharField(max_length=255)
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    target_url = models.URLField(null=True, blank=True)  
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f'Notification for {self.user.username}: {self.message}'

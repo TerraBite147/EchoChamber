@@ -41,6 +41,22 @@
             <p>You have not commented on any posts yet.</p>
             {% endfor %}
         </div>
+        <!-- User Notifications Column -->
+        <div class="col-md-12 user-notifications bg-light rounded p-2 mt-3">
+            <h2 class="text-dark">Your Notifications</h2>
+            <ul>
+                {% for notification in user_notifications %}
+                <li class="text-dark">
+                    <a href="{{ notification.target_url }}">{{ notification.message }}</a> - {{ notification.created_at }}
+                </li>
+                {% empty %}
+                <li class="text-dark">You have no new notifications.</li>
+                {% endfor %}
+            </ul>
+            {% if user_notifications %}
+            <button onclick="location.href='{% url 'clear_notifications' %}'" class="btn btn-primary">Clear Notifications</button>
+            {% endif %}
+        </div>
     </div>
 </div>
 
