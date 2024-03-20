@@ -21,7 +21,9 @@ def toggle_like(object, user):
     else:
         return None
 
-    like, created = model.objects.get_or_create(user=user, **{object.__class__.__name__.lower(): object})
+    like, created = model.objects.get_or_create(
+        user=user, **{object.__class__.__name__.lower(): object}
+    )
 
     if created:
         if isinstance(object, Comment):
@@ -147,11 +149,31 @@ def create_post(request):
 
 
 @login_required
+def edit_post(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    if request.user != post.author and not request.user.is_superuser:
+        return HttpResponseForbidden()
+
+    if request.method == "POST":
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect("post_detail", slug=post.slug)
+    else:
+        form = PostForm(instance=post)
+    return render(request, "blog/_post_edit.html", {"form": form, "post": post})
+
+
+@login_required
 def profile(request):
     user_posts = (
-        Post.objects.filter(author=request.user)
+        Post.objects.filter(author=request.user, status=1)
         .annotate(comment_count=Count("comments"), like_count=Count("likes"))
         .order_by("-posted_at")
+    )
+
+    draft_posts = Post.objects.filter(author=request.user, status=0).order_by(
+        "-posted_at"
     )
 
     user_comments = (
@@ -163,13 +185,15 @@ def profile(request):
     user_notifications = Notification.objects.filter(
         user=request.user, is_read=False
     ).order_by("-created_at")
+
     has_unread_notifications = user_notifications.exists()
 
     context = {
         "user_posts": user_posts,
+        "draft_posts": draft_posts,
         "user_comments": user_comments,
         "user_notifications": user_notifications,
-        "has_unread_notifications": has_unread_notifications,  # Add this line
+        "has_unread_notifications": has_unread_notifications,
     }
 
     return render(request, "blog/_profile.html", context)
@@ -190,5 +214,6 @@ def clear_notifications(request):
     Notification.objects.filter(user=request.user).update(is_read=True)
     return redirect("profile")
 
+
 def about(request):
-    return render(request, 'blog/about.html')
+    return render(request, "blog/about.html")

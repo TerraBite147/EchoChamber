@@ -1,7 +1,8 @@
 from django import forms
 from .models import Comment, Post
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit
+from crispy_forms.layout import Layout, Submit, Field
+from crispy_forms.bootstrap import PrependedText, FormActions
 
 
 class CommentForm(forms.ModelForm):
@@ -11,10 +12,6 @@ class CommentForm(forms.ModelForm):
         widgets = {
             "content": forms.Textarea(attrs={"class": "comment-textarea rounded"}),
         }
-
-
-from crispy_forms.layout import Field, Layout, Submit
-from crispy_forms.bootstrap import PrependedText, FormActions
 
 
 class PostForm(forms.ModelForm):

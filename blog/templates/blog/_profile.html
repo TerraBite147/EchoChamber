@@ -12,7 +12,8 @@
         <div class="col-lg-6 mb-3">
             <div class="bg-dark rounded pb-2 p-3">
                 <h2 class="text-white">Your Posts
-                    <a href="#postsCollapse" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="postsCollapse" class="toggle-collapse text-white">
+                    <a href="#postsCollapse" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                        aria-controls="postsCollapse" class="toggle-collapse text-white">
                         <i class="fas fa-chevron-down yellow"></i>
                     </a>
                 </h2>
@@ -20,7 +21,9 @@
                     <ul class="list-unstyled text-white">
                         {% for post in user_posts %}
                         <li>
-                            <a href="{% url 'post_detail' slug=post.slug %}" class="yellow">{{ post.title }}</a> - {{ post.like_count }} Likes - {{ post.comment_count }} Comments
+                            <a href="{% url 'post_detail' slug=post.slug %}" class="yellow">{{ post.title }}</a>
+                            - {{ post.likes.count }} Likes
+                            - {{ post.comments.count }} Comments
                         </li>
                         {% empty %}
                         <li>You have not written any posts yet.</li>
@@ -29,23 +32,25 @@
                 </div>
             </div>
         </div>
-    
+
         <!-- User Comments Column -->
         <div class="col-lg-6 mb-3">
             <div class="bg-dark rounded pb-2 p-3">
                 <h2 class="text-white">Your Comments
-                    <a href="#commentsCollapse" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="commentsCollapse" class="toggle-collapse text-white">
+                    <a href="#commentsCollapse" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                        aria-controls="commentsCollapse" class="toggle-collapse text-white">
                         <i class="fas fa-chevron-down yellow"></i>
                     </a>
                 </h2>
                 <div class="collapse" id="commentsCollapse">
                     {% for comment in user_comments %}
-                    <div class="card bg-secondary mb-3">
+                    <div class="card bg-dark mb-3">
                         <div class="card-body">
                             <h5 class="card-title">
-                                <a href="{% url 'post_detail' slug=comment.post.slug %}" class="yellow">{{ comment.post.title }}</a>
+                                <a href="{% url 'post_detail' slug=comment.post.slug %}" class="yellow">{{
+                                    comment.post.title }}</a>
                             </h5>
-                            <p class="card-text">{{ comment.content|truncatewords:10 }}</p>
+                            <p class="text-white">{{ comment.content|truncatewords:10 }}</p>
                             <p class="text-white"><small>Likes: {{ comment.likes_count }}</small></p>
                         </div>
                     </div>
@@ -64,16 +69,43 @@
             <ul class="list-unstyled">
                 {% for notification in user_notifications %}
                 <li class="text-dark">
-                    <a href="{% url 'read_notification' notification.id %}">{{ notification.message }}</a> - {{ notification.created_at|date:"N j, Y" }}
+                    <a href="{% url 'read_notification' notification.id %}">{{ notification.message }}</a> - {{
+                    notification.created_at|date:"N j, Y" }}
                 </li>
                 {% empty %}
                 <li class="text-dark">You have no new notifications.</li>
                 {% endfor %}
             </ul>
             {% if user_notifications %}
-            <button onclick="location.href='{% url 'clear_notifications' %}'" class="btn btn-primary">Clear Notifications</button>
+            <button onclick="location.href='{% url 'clear_notifications' %}'" class="btn btn-primary">Clear
+                Notifications</button>
             {% endif %}
         </div>
     </div>
+
+    <!-- User Draft Posts Column -->
+    <div class="col-lg-6 mb-3">
+        <div class="bg-dark rounded pb-2 p-3">
+            <h2 class="text-white">Your Draft Posts
+                <a href="#draftsCollapse" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                    aria-controls="draftsCollapse" class="toggle-collapse text-white">
+                    <i class="fas fa-chevron-down yellow"></i>
+                </a>
+            </h2>
+            <div class="collapse" id="draftsCollapse">
+                <ul class="list-unstyled text-white">
+                    {% for post in draft_posts %}
+                    <li>
+                        <a href="{% url 'edit_post' slug=post.slug %}" class="yellow">{{ post.title }}</a> -
+                        <span class="yellow">{{ post.category.name }}</span>
+                    </li>
+                    {% empty %}
+                    <li>You have no draft posts yet.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
+
 {% endblock %}

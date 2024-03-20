@@ -1,0 +1,58 @@
+[
+    {
+        "model": "blog.Category",
+        "pk": 7,
+        "fields": {
+            "name": "Education",
+            "description": "Insights and discussions on educational trends, policies, and personal development."
+        }
+    },
+    {
+        "model": "blog.Category",
+        "pk": 8,
+        "fields": {
+            "name": "Entertainment",
+            "description": "The latest news and analysis on movies, music, television, and books."
+        }
+    },
+    {
+        "model": "blog.Category",
+        "pk": 9,
+        "fields": {
+            "name": "Science",
+            "description": "Exploring the latest discoveries, research, and discussions in various scientific fields."
+        }
+    },
+    {
+        "model": "blog.Category",
+        "pk": 10,
+        "fields": {
+            "name": "Business",
+            "description": "Insights into the business world, including trends, analysis, and entrepreneurship."
+        }
+    },
+    {
+        "model": "blog.Category",
+        "pk": 11,
+        "fields": {
+            "name": "Sports",
+            "description": "Covering the latest in sports, from game highlights to player profiles and industry news."
+        }
+    },
+    {
+        "model": "blog.Category",
+        "pk": 12,
+        "fields": {
+            "name": "Travel",
+            "description": "Sharing travel experiences, tips, destination guides, and cultural insights."
+        }
+    },
+    {
+        "model": "blog.Category",
+        "pk": 13,
+        "fields": {
+            "name": "Fashion",
+            "description": "The latest trends, news, and analysis in the world of fashion."
+        }
+    }
+]
