@@ -4,9 +4,13 @@
 
 {% block content %}
 
-{% include 'blog/_post_list.html' %}
-<div id="loader" style="display: none;">
+<section aria-labelledby="post-list-heading">
+    <h2 id="post-list-heading" class="visually-hidden">Blog Posts</h2>
+    {% include 'blog/_post_list.html' %}
+</section>
+
+<div id="loader" style="display: none;" aria-live="assertive" aria-atomic="true">
     <p>Loading more posts...</p>
 </div>
-{% endblock %}
 
+{% endblock %}

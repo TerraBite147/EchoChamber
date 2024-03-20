@@ -9,36 +9,28 @@
 <html class="h-100" lang="en">
 
 <head>
-    <title>Echo Chamber</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="Join the Echo Chamber to share and discuss your thoughts and opinions." />
-    <meta name="keywords" content="blog, discussion, echo chamber, opinions" />
-    <meta name="robots" content="index,follow" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Join the Echo Chamber to share and discuss your thoughts and opinions.">
+    <meta name="keywords" content="blog, discussion, echo chamber, opinions">
+    <meta name="robots" content="index,follow">
+    <title>Echo Chamber</title>
 
     <!-- Preload Fonts -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" as="style">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;700&display=swap" as="style">
 
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-
-    <!-- Google Fonts CSS -->
+    <!-- CSS Files -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;700&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="shortcut icon" type="image/ico" href="{% static 'favicon.ico' %}">
+    <!-- Java Script -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
     {% block extra_styles %}{% endblock %}
 </head>
@@ -49,10 +41,9 @@
         <div class="container">
             <nav class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
                 aria-label="Main navigation">
-                <a class="navbar-brand title" href="{% url 'home' %}">Echo Chamber</a>
-
+                <a class="navbar-brand title" href="{{ home_url }}">Echo Chamber</a>
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="{% url 'home' %}" class="nav-link px-2">Home</a></li>
+                    <li><a href="{{ home_url }}" class="nav-link px-2">Home</a></li>
                     <li><a class="nav-link" href="{% url 'about' %}">About</a></li>
                     {% if user.is_authenticated and user.is_staff %}
                     <li><a href="{% url 'admin:index' %}" class="nav-link px-2">Admin</a></li>
@@ -64,22 +55,22 @@
                     <a href="{% url 'profile' %}" class="btn btn-outline-light position-relative">
                         {{ user.username }}
                         {% if has_unread_notifications %}
-                            <span class="notification-indicator"></span>
+                        <span class="notification-indicator"></span>
                         {% endif %}
                     </a>
-                    <a class="btn btn-warning" aria-current="page" href="{% url 'account_logout' %}">Logout</a>
+                    <a class="btn btn-warning" aria-current="page" href="{{ logout_url }}">Logout</a>
                     {% else %}
-                    <a class="btn btn-outline-light" aria-current="page" href="{% url 'account_signup' %}">Sign-up</a>
-                    <a class="btn btn-warning" aria-current="page" href="{% url 'account_login' %}">Login</a>
+                    <a class="btn btn-outline-light" aria-current="page" href="{{ signup_url }}">Sign-up</a>
+                    <a class="btn btn-warning" aria-current="page" href="{{ login_url }}">Login</a>
                     {% endif %}
                 </div>
             </nav>
         </div>
     </header>
 
-    <main class="flex-shrink-0 main-bg">
+    <main class="flex-shrink-0 main-bg" role="main">
         {% block content %}
-        <!-- Content Goes here -->
+        <!-- Main content goes here -->
         {% endblock content %}
     </main>
 
@@ -100,13 +91,11 @@
             </p>
         </div>
     </footer>
-    <!-- Bootstrap Bundle with Popper -->
+
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-
-
-    <!-- Font Awesome Kit -->
     <script src="https://kit.fontawesome.com/0da88937d5.js" defer crossorigin="anonymous"></script>
 
     {% block extra_scripts %}{% endblock %}

@@ -252,3 +252,16 @@ a[data-bs-toggle="collapse"] i {
     top: 50%;
     transform: translateY(-50%);
 }
+
+.btn-style {
+    color: #212529;
+    background-color: #ffc107;
+    border-color: #ffc107; 
+    cursor: default; 
+}
+
+.btn-style:hover, .btn-style:focus {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    box-shadow: none;
+}
