@@ -2,6 +2,7 @@ import os
 import django
 from faker import Faker
 import random
+from datetime import datetime
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'echo_chamber.settings')
 django.setup()
@@ -22,16 +23,19 @@ def add_category():
 
 
 def add_post(user, category):
+    end_date = datetime(2024, 3, 6)
+    post_date = fake.date_time_between(start_date="-3y", end_date=end_date)
+
     post = Post.objects.create(
         title=fake.sentence(),
         slug=fake.slug(),
         author=user,
         content=fake.text(max_nb_chars=1000),
-        posted_at=fake.date_time_this_year(),
+        posted_at=post_date,
         category=category,
         status=random.choice([0, 1]),
         excerpt=fake.text(max_nb_chars=200),
-        updated_on=fake.date_time_this_year()
+        updated_on=post_date  # Use the same date or generate another within the range
     )
     post.save()
     return post

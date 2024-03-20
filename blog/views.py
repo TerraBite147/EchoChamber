@@ -38,9 +38,22 @@ def toggle_like(object, user):
 
 class BlogList(generic.ListView):
     model = Post
-    queryset = Post.objects.filter(status=1).order_by("-posted_at")
     template_name = "blog/index.html"
     paginate_by = 6
+
+    def get_queryset(self):
+        sort = self.request.GET.get("sort", "date")
+
+        if sort == "likes":
+            return Post.objects.annotate(like_count=Count("likes")).order_by(
+                "-like_count"
+            )
+        elif sort == "comments":
+            return Post.objects.annotate(comment_count=Count("comments")).order_by(
+                "-comment_count"
+            )
+        else:  # Default to sort by date
+            return Post.objects.order_by("-posted_at")
 
     def get(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()

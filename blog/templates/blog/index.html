@@ -1,8 +1,14 @@
-<!-- blog/index.html -->
 {% extends "base.html" %}
 {% load static %}
 
 {% block content %}
+
+<!-- Sorting options -->
+<div class="sorting-options text-center my-3">
+    <a href="?sort=date" class="btn btn-secondary {% if request.GET.sort == 'date' or not request.GET.sort %}active{% endif %}">Sort by Date</a>
+    <a href="?sort=likes" class="btn btn-secondary {% if request.GET.sort == 'likes' %}active{% endif %}">Sort by Likes</a>
+    <a href="?sort=comments" class="btn btn-secondary {% if request.GET.sort == 'comments' %}active{% endif %}">Sort by Comments</a>
+</div>
 
 <section aria-labelledby="post-list-heading">
     <h2 id="post-list-heading" class="visually-hidden">Blog Posts</h2>

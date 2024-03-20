@@ -47,8 +47,8 @@
                     <div class="card bg-dark mb-3">
                         <div class="card-body">
                             <h5 class="card-title">
-                                <a href="{% url 'post_detail' slug=comment.post.slug %}" class="yellow">{{
-                                    comment.post.title }}</a>
+                                <a href="{% url 'post_detail' slug=comment.post.slug %}" class="yellow">
+                                    {{ comment.post.title }}</a>
                             </h5>
                             <p class="text-white">{{ comment.content|truncatewords:10 }}</p>
                             <p class="text-white"><small>Likes: {{ comment.likes_count }}</small></p>
@@ -61,30 +61,8 @@
             </div>
         </div>
     </div>
-
-    <!-- User Notifications Column -->
-    <div class="col-12 user-notifications mt-3">
-        <div class="bg-light rounded p-3">
-            <h2 class="text-dark">Your Notifications</h2>
-            <ul class="list-unstyled">
-                {% for notification in user_notifications %}
-                <li class="text-dark">
-                    <a href="{% url 'read_notification' notification.id %}">{{ notification.message }}</a> - {{
-                    notification.created_at|date:"N j, Y" }}
-                </li>
-                {% empty %}
-                <li class="text-dark">You have no new notifications.</li>
-                {% endfor %}
-            </ul>
-            {% if user_notifications %}
-            <button onclick="location.href='{% url 'clear_notifications' %}'" class="btn btn-primary">Clear
-                Notifications</button>
-            {% endif %}
-        </div>
-    </div>
-
     <!-- User Draft Posts Column -->
-    <div class="col-lg-6 mb-3">
+    <div class="col-lg-12">
         <div class="bg-dark rounded pb-2 p-3">
             <h2 class="text-white">Your Draft Posts
                 <a href="#draftsCollapse" data-bs-toggle="collapse" role="button" aria-expanded="false"
@@ -106,6 +84,28 @@
             </div>
         </div>
     </div>
+
+    <!-- User Notifications Column -->
+    <div class="col-12 user-notifications mt-3">
+        <div class="bg-light rounded p-3">
+            <h2 class="text-dark">Your Notifications</h2>
+            <ul class="list-unstyled">
+                {% for notification in user_notifications %}
+                <li class="text-dark">
+                    <a href="{% url 'read_notification' notification.id %}">{{ notification.message }}</a> -
+                    {{notification.created_at|date:"N j, Y" }}
+                </li>
+                {% empty %}
+                <li class="text-dark">You have no new notifications.</li>
+                {% endfor %}
+            </ul>
+            {% if user_notifications %}
+            <button onclick="location.href='{% url 'clear_notifications' %}'" class="btn btn-primary">Clear
+                Notifications</button>
+            {% endif %}
+        </div>
+    </div>
+
 </div>
 
 {% endblock %}
