@@ -21,13 +21,16 @@ def toggle_like(object, user):
     else:
         return None
 
-    like, created = model.objects.get_or_create(
-        user=user, **{object.__class__.__name__.lower(): object}
-    )
+    like, created = model.objects.get_or_create(user=user, **{object.__class__.__name__.lower(): object})
+
     if created:
+        if isinstance(object, Comment):
+            object.likes.add(user)
         return True  # Liked
     else:
         like.delete()
+        if isinstance(object, Comment):
+            object.likes.remove(user)
         return False  # Unliked
 
 

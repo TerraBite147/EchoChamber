@@ -8,7 +8,7 @@
         <i id="comment-like-icon-{{ comment.id }}"
             class="fa-solid fa-arrow-up yellow {% if request.user in comment.likes.all %}liked{% endif %}"></i>
     </a>
-    <span id="comment-like-count-{{ comment.id }}" class="like-count">{{ comment.likes.count }}</span>
+    <span id="comment-like-count-{{ comment.id }}" class="like-count">{{ comment.commentlike_set.count }}</span>
     {% else %}
     <a href="{% url 'account_login' %}" class="btn link like-icon">
         <i class="fa-solid fa-arrow-up yellow"></i>
