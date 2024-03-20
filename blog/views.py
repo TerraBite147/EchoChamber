@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.text import slugify
 from .models import Post, Comment, CommentLike, PostLike, Notification
 from .forms import CommentForm, PostForm
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render
 from django.db.models import Count
 
@@ -60,21 +60,18 @@ class BlogList(generic.ListView):
         context = self.get_context_data()
 
         if request.headers.get("x-requested-with") == "XMLHttpRequest":
-            # Define the page number
             page = request.GET.get("page")
-            paginator = Paginator(self.queryset, self.paginate_by)
+            paginator = Paginator(self.object_list, self.paginate_by)
 
             try:
                 posts = paginator.page(page)
             except PageNotAnInteger:
-                # If page is not an integer, deliver first page.
                 posts = paginator.page(1)
             except EmptyPage:
-                # If page is out of range, deliver last page of results.
                 posts = paginator.page(paginator.num_pages)
 
             html = render_to_string(
-                "blog/_post_list_partial.html",  # This template contains the post list part
+                "blog/_post_list_partial.html", 
                 {"post_list": posts},
                 request=request,
             )
