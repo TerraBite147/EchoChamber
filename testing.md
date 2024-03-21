@@ -17,7 +17,4 @@ Developer: [Logan Carlow](https://github.com/TerraBite147) <br>
 
 ## Code Validation
 
-- [HTML Validation](#html-validation)
-- [CSS Validation](#css-validation)
-- [JavaScript Validation](#javascript-validation)
-- [Python Validation](#python-validation)
+
