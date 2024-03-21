@@ -7,29 +7,46 @@
         <!-- Sorting options dropdown -->
         <div class="col-md-6 d-flex justify-content-start my-3">
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    Sort By
+                Sort by 
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="sortDropdown"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    {% if request.GET.sort == 'likes' %}
+                    Likes
+                    {% elif request.GET.sort == 'comments' %}
+                    Comments
+                    {% else %}
+                    Date
+                    {% endif %}
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="sortDropdown">
-                    <li><a class="dropdown-item {% if request.GET.sort == 'date' or not request.GET.sort %}active{% endif %}" href="?sort=date">Date</a></li>
-                    <li><a class="dropdown-item {% if request.GET.sort == 'likes' %}active{% endif %}" href="?sort=likes">Likes</a></li>
-                    <li><a class="dropdown-item {% if request.GET.sort == 'comments' %}active{% endif %}" href="?sort=comments">Comments</a></li>
+                    <li><a class="dropdown-item {% if request.GET.sort == 'date' or not request.GET.sort %}active{% endif %}"
+                            href="?sort=date&category={{ request.GET.category.name }}">Date</a></li>
+                    <li><a class="dropdown-item {% if request.GET.sort == 'likes' %}active{% endif %}"
+                            href="?sort=likes&category={{ request.GET.category.name }}">Likes</a></li>
+                    <li><a class="dropdown-item {% if request.GET.sort == 'comments' %}active{% endif %}"
+                            href="?sort=comments&category={{ request.GET.category.name }}">Comments</a></li>
                 </ul>
             </div>
         </div>
-        
+
         <!-- Category filter dropdown -->
         <div class="col-md-6 d-flex justify-content-end my-3">
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    Filter Category
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="categoryDropdown"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ request.GET.category|default:"Select Category" }}
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
                     {% for category in categories %}
-                    <li><a class="dropdown-item" href="{% url 'home' %}?category={{ category.name }}">{{ category.name }}</a></li>
+                    <li><a class="dropdown-item {% if request.GET.category == category.name %}active{% endif %}"
+                            href="{% url 'home' %}?category={{ category.name }}&sort={{ request.GET.sort }}">
+                            {{ category.name }}</a></li>
                     {% endfor %}
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="{% url 'home' %}">All Categories</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="{% url 'home' %}?sort={{ request.GET.sort }}">All Categories</a>
+                    </li>
                 </ul>
             </div>
         </div>
