@@ -2,18 +2,46 @@
 {% load static %}
 
 {% block content %}
+<div class="container">
+    <div class="row">
+        <!-- Sorting options dropdown -->
+        <div class="col-md-6 d-flex justify-content-start my-3">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Sort By
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+                    <li><a class="dropdown-item {% if request.GET.sort == 'date' or not request.GET.sort %}active{% endif %}" href="?sort=date">Date</a></li>
+                    <li><a class="dropdown-item {% if request.GET.sort == 'likes' %}active{% endif %}" href="?sort=likes">Likes</a></li>
+                    <li><a class="dropdown-item {% if request.GET.sort == 'comments' %}active{% endif %}" href="?sort=comments">Comments</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Category filter dropdown -->
+        <div class="col-md-6 d-flex justify-content-end my-3">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Filter Category
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+                    {% for category in categories %}
+                    <li><a class="dropdown-item" href="{% url 'home' %}?category={{ category.name }}">{{ category.name }}</a></li>
+                    {% endfor %}
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{% url 'home' %}">All Categories</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
-<!-- Sorting options -->
-<div class="sorting-options text-center my-3">
-    <a href="?sort=date" class="btn btn-secondary {% if request.GET.sort == 'date' or not request.GET.sort %}active{% endif %}">Sort by Date</a>
-    <a href="?sort=likes" class="btn btn-secondary {% if request.GET.sort == 'likes' %}active{% endif %}">Sort by Likes</a>
-    <a href="?sort=comments" class="btn btn-secondary {% if request.GET.sort == 'comments' %}active{% endif %}">Sort by Comments</a>
+    <section aria-labelledby="post-list-heading" class="row">
+        <h2 id="post-list-heading" class="visually-hidden">Blog Posts</h2>
+        <div class="col-12">
+            {% include 'blog/_post_list.html' %}
+        </div>
+    </section>
 </div>
-
-<section aria-labelledby="post-list-heading">
-    <h2 id="post-list-heading" class="visually-hidden">Blog Posts</h2>
-    {% include 'blog/_post_list.html' %}
-</section>
 
 <div id="loader" style="display: none;" aria-live="assertive" aria-atomic="true">
     <p>Loading more posts...</p>

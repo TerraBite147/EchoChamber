@@ -5,7 +5,7 @@ from django.http import JsonResponse, HttpResponseForbidden
 from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required
 from django.utils.text import slugify
-from .models import Post, Comment, CommentLike, PostLike, Notification
+from .models import Post, Comment, CommentLike, PostLike, Notification, Category
 from .forms import CommentForm, PostForm
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render
@@ -42,18 +42,25 @@ class BlogList(generic.ListView):
     paginate_by = 6
 
     def get_queryset(self):
+        queryset = super().get_queryset()
+        category_name = self.request.GET.get("category", None)
         sort = self.request.GET.get("sort", "date")
 
+        if category_name:
+            queryset = queryset.filter(category__name=category_name)
+
         if sort == "likes":
-            return Post.objects.annotate(like_count=Count("likes")).order_by(
+            queryset = queryset.annotate(like_count=Count("likes")).order_by(
                 "-like_count"
             )
         elif sort == "comments":
-            return Post.objects.annotate(comment_count=Count("comments")).order_by(
+            queryset = queryset.annotate(comment_count=Count("comments")).order_by(
                 "-comment_count"
             )
         else:  # Default to sort by date
-            return Post.objects.order_by("-posted_at")
+            queryset = queryset.order_by("-posted_at")
+
+        return queryset
 
     def get(self, request, *args, **kwargs):
         self.object_list = self.get_queryset()
@@ -71,13 +78,18 @@ class BlogList(generic.ListView):
                 posts = paginator.page(paginator.num_pages)
 
             html = render_to_string(
-                "blog/_post_list_partial.html", 
+                "blog/_post_list_partial.html",
                 {"post_list": posts},
                 request=request,
             )
             return JsonResponse({"html": html, "has_next": posts.has_next()})
 
         return self.render_to_response(context)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all()
+        return context
 
 
 def post_detail(request, slug):
