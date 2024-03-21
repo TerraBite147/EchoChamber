@@ -92,4 +92,7 @@ The website was responsive on all browsers and the functionality was consistent 
 
 I used Django's built-in testing framework to test the functionality of the website. The tests can be found in the tests.py file in the main app directory. The tests cover the following:
 
-- Testing the views
+- Testing the views models and urls
+
+![automated tests](readme/auto-tests.png)
+
