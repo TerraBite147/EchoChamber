@@ -286,3 +286,86 @@ By providing a seamless user experience with intuitive navigation, clear visual 
 - Google Fonts
 - ChatGPT
 
+### Libraries and Packages
+
+- asgiref: Synchronous and asynchronous Python compatibility library, used as a foundation for ASGI applications like Django.
+- click: A Python package for creating beautiful command line interfaces in a composable way.
+- crispy-bootstrap5: Django utility that lets you easily build Bootstrap 5 forms with Django Crispy Forms.
+- Django: A high-level Python web framework that encourages rapid development and clean, pragmatic design.
+- django-crispy-forms: A Django app that provides a DRY way to define forms' layout and rendering with Bootstrap styling.
+- django-summernote: A Django app that adds the Summernote WYSIWYG editor to text fields.
+- gunicorn: A Python WSGI HTTP Server for UNIX, designed to serve fast clients or large amounts of requests.
+- oauthlib: A generic, spec-compliant, thorough implementation of the OAuth request-signing logic for Python.
+- pathspec: Utility library for pattern matching of file paths. So for example, Git's .gitignore.
+- psycopg2: The most popular PostgreSQL adapter for Python, allowing Python code to interact with PostgreSQL databases.
+- python3-openid: A Python3 port of the python-openid library for OpenID support.
+- requests-oauthlib: An OAuth library for Python's Requests, providing easy access to protected resources.
+- sqlparse: A non-validating SQL parser for Python, providing parsing for SQL statements.
+- whitenoise: Allows your web app to serve its own static files, making it a self-contained unit that can be deployed anywhere without relying on nginx, Amazon S3, or any other external service.
+
+
+## Methodology
+
+Echo Chamber was developed using the Agile methodology, which emphasizes iterative development, collaboration, and flexibility in responding to change. The project was divided into sprints, with each sprint focusing on specific features and user stories. The development process involved continuous testing, and refinement to ensure that the platform meets requirements effectively.
+
+### Agile Development Process
+
+To streamline the development process, GitHub Issues were used to track tasks, user stories, and bugs, providing a centralized location for managing project-related activities. Each issue was assigned to a specific milestone, allowing for better organization and tracking of progress.
+
+### User Stories and Epics
+
+User stories were used to define the requirements and expectations of users, guiding the development process and ensuring that the platform meets user needs effectively. User stories were grouped into epics based on common themes and features, allowing for better planning and prioritization of tasks.
+
+### Iterative Development
+
+The development process was iterative, with regular testing to identify and address issues early in the development cycle. Continuous integration and deployment (CI/CD) were used to automate testing and deployment processes, ensuring that changes were deployed quickly and efficiently.
+
+We utilized MoSCoW prioritization to categorize user stories into Must Have, Should Have, Could Have, and Won't Have categories, allowing for better prioritization and focus on essential features.
+
+
+## Features
+
+### User Authentication
+
+- **Account Creation**: Users can create an account by providing a username, email, and password.
+- **Login**: Users can log in to their account securely using their username and password.
+- **Profile Page**: Users can view their profile page, which displays their posts, comments, draft posts, and notifications.
+- **Notification**: Users receive notifications for new likes and comments on their posts, allowing them to stay informed about user interactions.
+
+### Post Interaction
+
+- **View List of Posts**: Users can view a list of posts on the landing page, with options to filter by category and sort by date or popularity.
+- **View Post Details**: Users can view the full content of a post, along with comments, likes, and options to like or comment on the post.
+- **Create Post**: Users can create new posts by providing a title, content, category, and excerpt.
+- **Edit Post**: Users can edit their existing posts, with fields for title, content, category, and excerpt.
+- **Delete Post**: Users can delete their posts if they are the author of the post.
+- **Like Post**: Users can like posts to show their appreciation for the content.
+- **Comment on Post**: Users can comment on posts to share their thoughts and engage with other users.
+- **Edit Comment**: Users can edit their comments to update their content.
+- **Delete Comment**: Users can delete their comments if they are the author of the comment.
+- **Like Comment**: Users can like comments to show their appreciation for the content.
+
+### Admin Panel
+
+- **Admin Panel**: Admin users can access the admin panel to manage users, posts, and comments.
+- **User Management**: Admin users can manage user accounts, including viewing user details, updating user information, and deleting user accounts.
+- **Post Management**: Admin users can manage posts, including viewing post details, updating post information, and deleting posts.
+- **Comment Management**: Admin users can manage comments, including viewing comment details, updating comment information, and deleting comments.
+
+
+### Future Features
+
+- **Search Functionality**: Implement a search feature to allow users to search for posts based on keywords or categories.
+- **User Profiles**: Enhance user profiles with additional information, such as user bio, profile picture, and social media links.
+- **User Interactions**: Implement additional user interactions, such as following users, direct messaging, and user mentions.
+- **Content Recommendations**: Provide content recommendations based on user preferences, interests, and engagement history.
+- **Password Reset**: Implement a password reset feature to allow users to reset their password securely.
+- **Media Uploads**: Allow users to upload images, videos, and other media types to enhance their posts.
+- **Messaging System**: Implement a messaging system to facilitate private conversations between users.
+
+
+## Testing
+
+Testing was an integral part of the development process for Echo Chamber, ensuring that the platform functions as intended and meets user requirements effectively. The testing process involved manual testing, and automated testing.
+
+See testing documentation [here](
