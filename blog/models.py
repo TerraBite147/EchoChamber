@@ -18,7 +18,9 @@ class Category(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=100)
     slug = models.SlugField(max_length=200, unique=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
+    author = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="posts"
+    )
     content = models.TextField()
     posted_at = models.DateTimeField(default=timezone.now)
     category = models.ForeignKey(
@@ -42,8 +44,12 @@ class Post(models.Model):
 
 
 class PostLike(models.Model):
-    post = models.ForeignKey(Post, related_name="likes", on_delete=models.CASCADE)
-    user = models.ForeignKey(User, related_name="post_likes", on_delete=models.CASCADE)
+    post = models.ForeignKey(
+        Post, related_name="likes", on_delete=models.CASCADE
+    )
+    user = models.ForeignKey(
+        User, related_name="post_likes", on_delete=models.CASCADE
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -54,7 +60,9 @@ class PostLike(models.Model):
 
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
+    post = models.ForeignKey(
+        Post, on_delete=models.CASCADE, related_name="comments"
+    )
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="user_comments"
     )
