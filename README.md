@@ -369,4 +369,3 @@ We utilized MoSCoW prioritization to categorize user stories into Must Have, Sho
 Testing was an integral part of the development process for Echo Chamber, ensuring that the platform functions as intended and meets user requirements effectively. The testing process involved manual testing, and automated testing.
 
 See testing documentation [here](https://github.com/TerraBite147/echo-chamber/blob/main/testing.md)
-
