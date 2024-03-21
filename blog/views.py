@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.http import JsonResponse, HttpResponseForbidden
 from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 from django.utils.text import slugify
 from .models import Post, Comment, CommentLike, PostLike, Notification, Category
 from .forms import CommentForm, PostForm
@@ -96,16 +97,20 @@ def post_detail(request, slug):
     queryset = Post.objects.filter(status=1)
     post = get_object_or_404(queryset, slug=slug)
 
-    if request.method == "POST" and request.user.is_authenticated:
-        comment_form = CommentForm(request.POST)
-        if comment_form.is_valid():
-            comment = comment_form.save(commit=False)
-            comment.author = request.user
-            comment.post = post
-            comment.save()
-            return redirect("post_detail", slug=post.slug)
-    else:
-        comment_form = CommentForm()
+    comment_form = CommentForm()
+
+    if request.method == "POST":
+        if request.user.is_authenticated:
+            comment_form = CommentForm(request.POST)
+            if comment_form.is_valid():
+                comment = comment_form.save(commit=False)
+                comment.author = request.user
+                comment.post = post
+                comment.save()
+                return redirect("post_detail", slug=post.slug)
+        else:
+            # Redirect unauthenticated users to the login page
+            return redirect("%s?next=%s" % (settings.LOGIN_URL, request.path))
 
     context = {"post": post, "comment_form": comment_form}
     return render(request, "blog/post_detail.html", context)
@@ -138,6 +143,48 @@ def delete_post(request, slug):
 
 
 @login_required
+def create_post(request):
+    if request.method == "POST":
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.slug = slugify(post.title)
+            post.save()
+
+            # Check if the post is a draft
+            if post.status == 0: 
+                # Redirect to the profile page if the post is a draft
+                return redirect("profile")
+            else:
+                # Redirect to the post detail page if the post is published
+                return redirect("post_detail", slug=post.slug)
+    else:
+        form = PostForm()
+    return render(request, "blog/_post_creation.html", {"form": form})
+
+
+@login_required
+def edit_post(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    if request.user != post.author and not request.user.is_superuser:
+        return HttpResponseForbidden()
+
+    if request.method == "POST":
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            edited_post = form.save() 
+            if edited_post.status == 0:
+                return redirect("profile")
+            else:
+                return redirect("post_detail", slug=edited_post.slug)
+    else:
+        form = PostForm(instance=post)
+
+    return render(request, "blog/_post_edit.html", {"form": form, "post": post})
+
+
+@login_required
 def like_comment(request, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
     liked = toggle_like(comment, request.user)
@@ -153,37 +200,6 @@ def delete_comment(request, comment_id):
         return redirect("post_detail", slug=comment.post.slug)
     else:
         return HttpResponseForbidden("You are not allowed to delete this comment.")
-
-
-@login_required
-def create_post(request):
-    if request.method == "POST":
-        form = PostForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.slug = slugify(post.title)
-            post.save()
-            return redirect("post_detail", slug=post.slug)
-    else:
-        form = PostForm()
-    return render(request, "blog/_post_creation.html", {"form": form})
-
-
-@login_required
-def edit_post(request, slug):
-    post = get_object_or_404(Post, slug=slug)
-    if request.user != post.author and not request.user.is_superuser:
-        return HttpResponseForbidden()
-
-    if request.method == "POST":
-        form = PostForm(request.POST, instance=post)
-        if form.is_valid():
-            form.save()
-            return redirect("post_detail", slug=post.slug)
-    else:
-        form = PostForm(instance=post)
-    return render(request, "blog/_post_edit.html", {"form": form, "post": post})
 
 
 @login_required
