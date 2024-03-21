@@ -1,45 +1,41 @@
-$(window).scroll(function() {
-    // Trigger the data load when the user is 100px from the bottom of the document
-    if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-        if (!window.isLoadingPosts && window.hasMorePosts) {
-            window.isLoadingPosts = true;
-            var nextPage = parseInt($('#page-number').val()) + 1;  // Increment the page number
+$(function() {
+    var $loader = $('#loader');
+    var page = 2;
+    var isLoading = false;
+    var sort = new URLSearchParams(window.location.search).get('sort') || 'date';
+    var category = new URLSearchParams(window.location.search).get('category');
 
-            // Show the loader
-            $('#loader').show();
+    $(window).scroll(function() {
+        var endOfPage = $(document).height() - $(window).height() - $loader.height();
+        
+        if ($(window).scrollTop() >= endOfPage && !isLoading) {
+            isLoading = true;
+            $loader.show();
+
+            var ajaxUrl = `/?page=${page}&sort=${sort}`;
+            if (category) {
+                ajaxUrl += `&category=${category}`;
+            }
 
             $.ajax({
-                url: '/', 
+                url: ajaxUrl,
                 type: 'GET',
-                data: {
-                    'page': nextPage,
-                    'x-requested-with': 'XMLHttpRequest',
-                },
                 success: function(data) {
-                    // Hide the loader
-                    $('#loader').hide();
-
                     if (data.html) {
-                        $('#posts-container').append(data.html);  // Append the new posts
-                        $('#page-number').val(nextPage);  // Update the page number
-                        window.isLoadingPosts = false;
-                        window.hasMorePosts = data.has_next;  // Check if there are more posts to load
-                    }
-                    if (!data.has_next) {
-                        // Optionally, hide or remove the loader if there are no more posts
-                        $('#loader').hide();
+                        $('#posts-container').append(data.html);
+                        page++;
+                        isLoading = false;
+                        $loader.hide();
+                    } else {
+                        $loader.hide();
                     }
                 },
-                error: function(xhr, status, error) {
-                    // Handle errors
-                    console.error("Error while loading posts: ", error);
-                    // Optionally, show an error message or handle the error gracefully
-                    $('#loader').hide();
+                error: function() {
+                    isLoading = false;
+                    $loader.hide();
+                    console.log('No more pages to load.');
                 }
             });
         }
-    }
+    });
 });
-
-window.isLoadingPosts = false;
-window.hasMorePosts = true;

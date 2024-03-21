@@ -228,3 +228,9 @@ a {
     border-radius: 50%;
     transform: translate(50%, -50%);
 }
+
+@media (max-width: 425px) {
+    .author, .card-text .h6 {
+        font-size: 14px; 
+    }
+}

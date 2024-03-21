@@ -5,9 +5,8 @@
 <div class="container">
     <div class="row">
         <!-- Sorting options dropdown -->
-        <div class="col-md-6 d-flex justify-content-start my-3">
+        <div class="col-6 d-flex justify-content-start my-3">
             <div class="dropdown">
-                Sort by 
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="sortDropdown"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     {% if request.GET.sort == 'likes' %}
@@ -30,7 +29,7 @@
         </div>
 
         <!-- Category filter dropdown -->
-        <div class="col-md-6 d-flex justify-content-end my-3">
+        <div class="col-6 d-flex justify-content-end my-3">
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="categoryDropdown"
                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -51,14 +50,12 @@
             </div>
         </div>
     </div>
-
+</div>
     <section aria-labelledby="post-list-heading" class="row">
         <h2 id="post-list-heading" class="visually-hidden">Blog Posts</h2>
-        <div class="col-12">
             {% include 'blog/_post_list.html' %}
-        </div>
     </section>
-</div>
+
 
 <div id="loader" style="display: none;" aria-live="assertive" aria-atomic="true">
     <p>Loading more posts...</p>
