@@ -40,7 +40,37 @@ Developer: [Logan Carlow](https://github.com/TerraBite147) <br>
     - [Color Scheme](#color-scheme)
     - [Fonts](#fonts)
     - [Layout](#layout)
-    - [Before users log in](#before-users-log-in)   
+    - [Before users log in](#before-users-log-in)
+    - [After users log in](#after-users-log-in)
+5. [Technologies Used](#technologies-used)
+    - [Languages](#languages)
+    - [Frameworks and Libraries](#frameworks-and-libraries)
+    - [Database](#database)
+    - [Tools and Platforms](#tools-and-platforms)
+    - [Libraries and Packages](#libraries-and-packages)
+6. [Methodology](#methodology)
+    - [Agile Development Process](#agile-development-process)
+    - [User Stories and Epics](#user-stories-and-epics)
+    - [Iterative Development](#iterative-development)
+7. [Features](#features)
+    - [User Authentication](#user-authentication)
+    - [Post Interaction](#post-interaction)
+    - [Admin Panel](#admin-panel)
+    - [Future Features](#future-features)
+8. [Testing](#testing)
+9. [Deployment](#deployment)
+    - [App Deployment](#app-deployment)
+    - [Forking the Repository](#forking-the-repository)
+    - [Clone of the Repository](#clone-of-the-repository)
+10. [Credits](#credits)
+    - [Django Documentation](#django-documentation)
+    - [Bootstrap docs](#bootstrap-docs)
+    - [Geeksforgeeks](#geeksforgeeks)
+    - [StackOverflow](#stackoverflow)
+    - [Other sites](#other-sites)
+    - [Media](#media)
+    - [Content](#content)
+
 
 
 
@@ -369,3 +399,158 @@ We utilized MoSCoW prioritization to categorize user stories into Must Have, Sho
 Testing was an integral part of the development process for Echo Chamber, ensuring that the platform functions as intended and meets user requirements effectively. The testing process involved manual testing, and automated testing.
 
 See testing documentation [here](https://github.com/TerraBite147/echo-chamber/blob/main/testing.md)
+
+
+## Deployment
+
+Echo Chamber was deployed on Heroku, a cloud platform that provides hosting services for web applications. The deployment process involved setting up the Heroku app, configuring the environment variables, and deploying the application using Git.
+
+### App Deployment
+For deploying Your app, Heroku is used. Follow these steps:
+
+ **Create a New App:**
+   - Create a new app on Heroku dashboard.
+
+ **Configure Settings:**
+   - Navigate to "Settings" in new app.
+
+ **Config Vars Setup:**
+   - In "Config Vars," add `PORT` as the key and `8000` as its value.
+
+ **Add PostgreSQL Database:**
+   - Choose PostgreSQL as database.
+
+        Example "ElephantSQL" was used in this project
+
+ **Configure DATABASE_URL:**
+   - In "Config Vars," add `DATABASE_URL` and copy the URL from PostgreSQL dashboard.
+
+     Note: If using ElephantSQL as PostgreSQL provider, you can use the URL provided by ElephantSQL.
+
+ **Environment Variable Setup:**
+   - Create a new file in workspace called `env.py`.
+   - Import the `os` library and set the environment variable for `DATABASE_URL` to the Heroku address (or ElephantSQL URL)
+   - Add a secret key using `os.environ["SECRET_KEY"] = "your secret key here"`.
+
+ **Heroku Config Vars:**
+   - Add the secret key to the Heroku app's config vars in the settings.
+
+ **Django Settings:**
+   - In `settings.py` of Django app, import `Path` from `pathlib`, `os`, and `dj_database_url`.
+   - Add `if os.path.isfile("env.py"): import env` to the file.
+   - Replace the SECRET_KEY with `SECRET_KEY = os.environ.get('SECRET_KEY')`.
+   - Replace the database section with `DATABASES = {'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))}`.
+
+ **Migrate Models:**
+   - In workspace terminal, migrate the models to the new database connection.
+
+   ### Version Control
+To manage version control and push code to the main repository on GitHub using GitPod, follow these steps:
+
+ **Add Changes:**
+   - In the GitPod terminal, use the command `git add .` to stage changes.
+
+ **Commit Changes:**
+   - Commit changes with a descriptive comment using the command:
+     ```
+     git commit -m "Push comment here"
+     ```
+
+ **Push to GitHub:**
+   - Push the updates to the repository on GitHub with the command:
+     ```
+     git push
+     ```
+
+ **Migrate Models:**
+    - In the terminal, migrate the models to the new database connection.
+
+### Forking the Repository:
+
+By forking the GitHub Repository, can create a copy of the original repository without affecting the original. Follow these steps:
+
+ **GitHub Account Setup:**
+   - Log into GitHub account or create one if you don't have one.
+
+ **Locate the Repository:**
+   - Find the repository at https://github.com/terraBite147/echo-chamber.
+
+**Fork the Repository:**
+   - At the top right of the repository page, click "Fork" to create a copy in your own GitHub repository.
+
+### Clone of the Repository:
+
+Creating a clone allows you to have a local copy of the project. Follow these steps:
+
+ **Repository URL:**
+   - Navigate to https://github.com/terraBite147/echo-chamber.
+   - Click the green "Code" button at the top right.
+
+ **Clone the Repository:**
+   - Select the "Clone by HTTPS" option and copy the provided URL to the clipboard.
+
+ **Terminal and Git:**
+   - Open your code editor or terminal and navigate to the directory where you want to clone the repository.
+   - Run `git clone` followed by the copied URL.
+   - Press enter, and Git will clone the repository to your local machine.
+
+
+To fork the repository, follow these steps:
+
+1. Go to the GitHub repository.
+2. Click on the Fork button in the upper right-hand corner.
+3. Wait for the forking process to complete. Once done, you will have a copy of the repository in your GitHub account.
+
+To clone the repository, follow these steps:
+
+1. Go to the GitHub repository.
+2. Locate the Code button above the list of files and click it.
+3. Select your preferred method for cloning: HTTPS, SSH, or GitHub CLI, and click the copy button to copy the repository URL to your clipboard.
+4. Open Git Bash (or your preferred terminal).
+5. Change the current working directory to the location where you want the cloned directory to be created.
+6. Type the command `git clone` followed by the URL you copied in step 3. The command should look like this: `git clone https://github.com/terraBite147/echo-chamber`.
+7. Press Enter to create your local clone.
+
+<p align="right">(<a href="#table-of-content">back to top</a>)</p>
+
+
+## Credits
+
+### Django Documentation:
+The official Django documentation with guidance on models, forms, templates, and various aspects of Django development.
+
+- [Models](https://docs.djangoproject.com/en/4.2/topics/db/models/)
+- [DeleteView](https://docs.djangoproject.com/en/3.2/ref/class-based-views/generic-editing/)
+- [Validators](https://docs.djangoproject.com/en/5.0/ref/forms/validation/)
+- [Authentication System](https://docs.djangoproject.com/en/3.2/topics/auth/default/)
+- [URL patterns](https://docs.djangoproject.com/en/5.0/topics/http/urls/)
+- [Automated testing](https://docs.djangoproject.com/en/5.0/topics/testing/overview/)
+
+### Bootstrap docs:
+- [Bootstrap framework](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
+- [Bootstrap forms](https://getbootstrap.com/docs/5.1/forms/overview/)
+
+### Geeksforgeeks: 
+- [Using Crispy Form](https://www.geeksforgeeks.org/styling-django-forms-with-django-crispy-forms/)
+
+### StackOverflow: 
+- [About Django Messages](https://stackoverflow.com/questions/28723266/django-display-message-after-post-form-submit)
+- [About Django Sort by Filter](https://stackoverflow.com/questions/72117712/django-filter-by-category)
+- [About Django Form Widgets](https://stackoverflow.com/questions/68736684/modify-django-model-form-field-with-widget)
+
+
+### Other sites:
+- [Styling Crispy forms](https://blog.appseed.us/django-forms-styling-with-bootstrap/)
+- [Organize Imports](https://peps.python.org/pep-0008/)
+- [How to override default django templates](https://www.makeuseof.com/override-default-templates-django-allauth/)
+
+
+
+- Code Institute, Module 4 & Django Coding Walkthrough material.
+
+### Media
+- [Favicon Generator](https://favicon.io/) to create the blue 'C' favicon in the browser tab.
+
+### Content
+- Content for the webpage and readme-file was written together with [ChatGPT](https://chat.openai.com/) and VSCODE CoPilot AI assistant.
+
